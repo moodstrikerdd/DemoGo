@@ -1,2 +1,2 @@
 # DemoGo
-all kinds of demoss
+all kinds of demos
