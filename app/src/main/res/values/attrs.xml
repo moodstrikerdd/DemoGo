@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CommTopBar">
+        //沉浸式
+        <attr name="needPadding" format="boolean" />
+
+        <attr name="topBackground" format="reference|color" />
+
+        <attr name="ivLeftSrc" format="reference" />
+
+        <attr name="tvLeftText" format="string" />
+        <attr name="tvLeftTextColor" format="color" />
+        <attr name="tvLeftTextSize" format="dimension" />
+
+        <attr name="tvTitleText" format="string" />
+        <attr name="tvTitleTextColor" format="color" />
+        <attr name="tvTitleTextSize" format="dimension" />
+
+        <attr name="tvRightText" format="string" />
+        <attr name="tvRightTextColor" format="color" />
+        <attr name="tvRightTextSize" format="dimension" />
+
+        <attr name="ivRightSrc" format="reference" />
+    </declare-styleable>
+
+</resources>
