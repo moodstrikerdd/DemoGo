@@ -19,12 +19,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".mainframe.webview.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mainframe.sideSlipListView.SideSlipActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mainframe.headerAndFooterRecyclerView.HeaderFooterActivity"
             android:screenOrientation="portrait" />
     </application>
 

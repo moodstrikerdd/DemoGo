@@ -26,14 +26,13 @@ public class ViewHolder extends RecyclerView.ViewHolder {
     private View mConvertView;
     private Context mContext;
     private int mLayoutId;
-    private ViewHolder holder;
 
     public ViewHolder(Context context, View itemView, ViewGroup parent, int position) {
         super(itemView);
         mContext = context;
         mConvertView = itemView;
         mPosition = position;
-        mViews = new SparseArray<View>();
+        mViews = new SparseArray<>();
         mConvertView.setTag(this);
 
     }
@@ -62,13 +61,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return holder;
     }
 
+    public static ViewHolder get(Context context, View convertView) {
+        return new ViewHolder(context, convertView, null, 0);
+    }
 
-    /**
-     * 通过viewId获取控件
-     *
-     * @param viewId
-     * @return
-     */
+
     public <T extends View> T getView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
@@ -82,13 +79,6 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return mConvertView;
     }
 
-    /**
-     * 设置TextView的值
-     *
-     * @param viewId
-     * @param text
-     * @return
-     */
     public ViewHolder setText(int viewId, String text) {
         TextView tv = getView(viewId);
         tv.setText(text);
@@ -137,7 +127,7 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint("ObsoleteSdkInt")
     public ViewHolder setAlpha(int viewId, float value) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getView(viewId).setAlpha(value);
@@ -151,9 +141,11 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setVisible(int viewId, boolean visible) {
+    public ViewHolder setVisible(int viewId, int visiblity) {
         View view = getView(viewId);
-        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        if (visiblity == View.GONE || visiblity == View.VISIBLE || visiblity == View.INVISIBLE) {
+            view.setVisibility(visiblity);
+        }
         return this;
     }
 

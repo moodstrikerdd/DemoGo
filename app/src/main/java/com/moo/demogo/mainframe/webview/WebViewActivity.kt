@@ -20,12 +20,18 @@ class WebViewActivity : BaseActivity() {
         initWebSetting()
     }
 
-
     private fun initWebSetting() {
+        //CVE-2014-1939
+        // WebView 中内置导出的 “searchBoxJavaBridge_” Java Object 可能被利用，实现远程任意代码；
+        webView.removeJavascriptInterface("searchBoxJavaBridge_")
+        //CVE-2014-7224，类似于 CVE-2014-1939 ，
+        // WebView 内置导出 “accessibility” 和 “accessibilityTraversal” 两个 Java Object 接口，
+        // 可被利用实现远程任意代码执行。
+        webView.removeJavascriptInterface("accessibility")
+        webView.removeJavascriptInterface("accessibilityTraversal")
+
         val settings = webView.settings
         settings.javaScriptEnabled = true
-
-        settings.loadsImagesAutomatically = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             settings.useWideViewPort = true
