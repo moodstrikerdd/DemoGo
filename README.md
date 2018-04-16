@@ -2,7 +2,9 @@
 
 ## 模块说明
 
-### module  adapter：包含ListView RecyclerView 通用adapter两部分。ListView支持多布局；RecyclerView支持多布局，支持header、footer、divider等。
+### module  adapter：适配器模块
+
+包含ListView RecyclerView 通用adapter两部分。ListView支持多布局；RecyclerView支持多布局，支持header、footer、divider等。
 
 ### module app：主体功能模块
    
