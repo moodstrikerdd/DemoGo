@@ -1,7 +1,6 @@
-# DemoGo  
-## all kinds of demos
+# DemoGo ： all kinds of demos
 
-###模块说明
+##模块说明
 
 module  adapter：包含ListView RecyclerView 通用adapter两部分。ListView支持多布局；RecyclerView支持多布局，支持header、footer、divider等。
 
