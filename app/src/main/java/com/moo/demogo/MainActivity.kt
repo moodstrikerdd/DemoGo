@@ -7,6 +7,7 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.RecycleViewDivider
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.bean.ActivityNameBean
+import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
 import com.moo.demogo.mainframe.headerAndFooterRecyclerView.HeaderFooterActivity
 import com.moo.demogo.mainframe.sideSlipListView.SideSlipActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
@@ -18,7 +19,8 @@ class MainActivity : BaseActivity() {
     private val list = arrayListOf(
             ActivityNameBean("WebViewActivity", "WebView相关设置，入宽高自适应，shouldOverrideUrlLoading过时替代等", WebViewActivity::class.java),
             ActivityNameBean("SideSlipActivity", "侧滑ListView\nSwipeRefreshLayout冲突，NestedScrolling实现", SideSlipActivity::class.java),
-            ActivityNameBean("HeaderFooterActivity", "RecyclerView添加多头和尾，使用装饰者模式，将正常Adapter包装，使其可以addHeaderView和addFooterView", HeaderFooterActivity::class.java)
+            ActivityNameBean("HeaderFooterActivity", "RecyclerView添加多头和尾，使用装饰者模式，将正常Adapter包装，使其可以addHeaderView和addFooterView", HeaderFooterActivity::class.java),
+            ActivityNameBean("CoroutinesActivity", "kotlin重点---协程\n线程间调度，是异步任务能线性调用。", CoroutinesActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main

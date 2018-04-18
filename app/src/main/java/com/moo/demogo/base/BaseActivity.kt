@@ -26,10 +26,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun initStatusBar() {
         val sdkVersion = Build.VERSION.SDK_INT
-        if (sdkVersion >= 16) {
-            val decorView = window.decorView
-            decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-        }
+        val decorView = window.decorView
+        decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
         if (sdkVersion in 19..20) {
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         } else if (sdkVersion >= 21) {

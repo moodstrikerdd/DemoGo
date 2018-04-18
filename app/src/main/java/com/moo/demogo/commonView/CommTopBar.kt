@@ -1,10 +1,12 @@
 package com.moo.demogo.commonView
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.moo.adapter.ViewHolder
@@ -21,7 +23,7 @@ class CommTopBar @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    var mViewHolder: ViewHolder? = null
+    private var mViewHolder: ViewHolder? = null
 
     var needPadding by Delegates.observable(true) { _, _, new ->
         val height = if (new) {
@@ -34,12 +36,18 @@ class CommTopBar @JvmOverloads constructor(
 
     var background by Delegates.observable(Any()) { _, _, new ->
         if (new is Drawable) {
-            mViewHolder?.getView<RelativeLayout>(R.id.container)?.setBackgroundDrawable(new)
+            mViewHolder?.getView<RelativeLayout>(R.id.container)?.background = new
         }
     }
 
     var ivLeftSrc by Delegates.observable(R.mipmap.ic_launcher) { _, _, new ->
-        mViewHolder?.setImageResource(R.id.ivLeft, new)
+        val view = mViewHolder?.getView<ImageView>(R.id.ivLeft)
+        view?.setImageResource(new)
+        view?.setOnClickListener {
+            if (getContext() is Activity) {
+                (getContext() as Activity).onBackPressed()
+            }
+        }
     }
     var tvLeftText by Delegates.observable("") { _, _, new ->
         mViewHolder?.setText(R.id.tvLeft, new)
@@ -51,7 +59,7 @@ class CommTopBar @JvmOverloads constructor(
         val textView = mViewHolder?.getView<TextView>(R.id.tvLeft)
         textView?.textSize = new
     }
-    var tvTitleText by Delegates.observable("") { _, _, new ->
+    private var tvTitleText by Delegates.observable("") { _, _, new ->
         mViewHolder?.setText(R.id.tvTitle, new)
     }
     var tvTitleTextColor by Delegates.observable(R.mipmap.ic_launcher) { _, _, new ->
@@ -82,7 +90,6 @@ class CommTopBar @JvmOverloads constructor(
         initAttrs(osa)
         osa.recycle()
     }
-
 
     private fun initAttrs(osa: TypedArray) {
         for (index in 0 until osa.indexCount) {
