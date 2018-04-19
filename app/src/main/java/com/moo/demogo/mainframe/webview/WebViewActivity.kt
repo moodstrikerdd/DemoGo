@@ -1,18 +1,32 @@
 package com.moo.demogo.mainframe.webview
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
+import android.text.TextUtils
 import android.webkit.*
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
+import com.moo.demogo.constant.DefineKey
 import kotlinx.android.synthetic.main.activity_web_view.*
 
 
 @SuppressLint("SetJavaScriptEnabled")
 class WebViewActivity : BaseActivity() {
+
+    private val titleMap: HashMap<String, String> = hashMapOf()
+
+    companion object {
+        fun intentStart(context: Context, url: String, title: String?) {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(DefineKey.URL, url)
+            intent.putExtra(DefineKey.TITLE, title ?: "网页")
+            context.startActivity(intent)
+        }
+    }
 
     override fun getLayoutId(): Int = R.layout.activity_web_view
 
@@ -65,6 +79,16 @@ class WebViewActivity : BaseActivity() {
 
         }
 
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onReceivedTitle(view: WebView, title: String) {
+                super.onReceivedTitle(view, title)
+                if (titleMap[view.url] == null) {
+                    titleMap[view.url] = title
+                }
+                topBar.tvTitleText = titleMap[view.url] ?: "网页"
+            }
+        }
+
         webView.setDownloadListener { url, _, _, _, _ ->
             val uri = Uri.parse(url)
             val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -79,7 +103,15 @@ class WebViewActivity : BaseActivity() {
     }
 
     override fun initData() {
-        webView.loadUrl("https://www.panda.tv/all?pdt=1.18.pheader-n.1.1sijfa2v86j")
+        val url = intent.getStringExtra(DefineKey.URL)
+        var title = intent.getStringExtra(DefineKey.TITLE)
+        if (TextUtils.isEmpty(title)) {
+            title = "网页"
+        }
+
+        titleMap[url] = title
+        topBar.tvTitleText = title
+        webView.loadUrl(url)
     }
 
 }

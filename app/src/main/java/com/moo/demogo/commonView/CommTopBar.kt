@@ -59,7 +59,7 @@ class CommTopBar @JvmOverloads constructor(
         val textView = mViewHolder?.getView<TextView>(R.id.tvLeft)
         textView?.textSize = new
     }
-    private var tvTitleText by Delegates.observable("") { _, _, new ->
+    var tvTitleText by Delegates.observable("") { _, _, new ->
         mViewHolder?.setText(R.id.tvTitle, new)
     }
     var tvTitleTextColor by Delegates.observable(R.mipmap.ic_launcher) { _, _, new ->
