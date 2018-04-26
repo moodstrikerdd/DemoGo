@@ -1,4 +1,4 @@
-package com.moo.demogo.mainframe.sideSlipListView.view
+package com.moo.demogo.mainframe.sidesliplistview.view
 
 import android.content.Context
 import android.support.v4.widget.SwipeRefreshLayout

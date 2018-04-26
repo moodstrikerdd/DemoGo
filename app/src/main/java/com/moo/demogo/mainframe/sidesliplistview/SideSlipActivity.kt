@@ -1,4 +1,4 @@
-package com.moo.demogo.mainframe.sideSlipListView
+package com.moo.demogo.mainframe.sidesliplistview
 
 import android.view.View
 import android.widget.TextView

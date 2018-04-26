@@ -23,10 +23,10 @@
             android:name=".mainframe.webview.WebViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mainframe.sideSlipListView.SideSlipActivity"
+            android:name=".mainframe.sidesliplistview.SideSlipActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".mainframe.headerAndFooterRecyclerView.HeaderFooterActivity"
+            android:name=".mainframe.headerandfooter.HeaderFooterActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mainframe.coroutines.CoroutinesActivity"

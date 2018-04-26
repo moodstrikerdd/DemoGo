@@ -8,8 +8,8 @@ import com.moo.adapter.recyclerview.RecycleViewDivider
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.bean.ActivityNameBean
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
-import com.moo.demogo.mainframe.headerAndFooterRecyclerView.HeaderFooterActivity
-import com.moo.demogo.mainframe.sideSlipListView.SideSlipActivity
+import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
+import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
