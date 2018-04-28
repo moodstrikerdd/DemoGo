@@ -29,12 +29,16 @@ class SideSlipActivity : BaseActivity() {
 
         }
         lvContent.adapter = adapter
+
+        refresh.setOnRefreshListener { initData() }
     }
 
     override fun initData() {
+        data.clear()
         for (i in 0..20) {
             data.add("item" + (i + 1))
         }
+        refresh.isRefreshing = false
         adapter?.notifyDataSetChanged()
     }
 
