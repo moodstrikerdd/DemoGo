@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.activity_coroutines.*
 import org.jetbrains.anko.toast
 
 class CoroutinesActivity : BaseActivity() {
-    private val TAG = "CoroutinesActivity"
 
     private var adapter: CommonAdapter<HotWebBean>? = null
     private val data = arrayListOf<HotWebBean>()
