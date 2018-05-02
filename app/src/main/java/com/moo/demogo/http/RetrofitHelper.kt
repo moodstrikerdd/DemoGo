@@ -22,33 +22,41 @@ object RetrofitHelper {
     private const val READ_TIMEOUT = 10L
     private const val TAG = "Retrofit:"
     private const val DATA_FRONT = "Data:"
+    //实例化api
     val api: ApiService by lazy {
         getService(ApiService::class.java)
     }
+    //实例化Gson，用于控制台格式化输出json
     private val gson: Gson by lazy {
         GsonBuilder().setPrettyPrinting().create()
     }
+    //实例化Retrofit
     private val mRetrofit: Retrofit by lazy {
         Retrofit.Builder().apply {
             baseUrl(BASE_URL)
             client(OkHttpClient().newBuilder().apply {
                 connectTimeout(CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
+                addInterceptor {
+                    val request = it.request()
+                    val newBuilder = request.newBuilder()
+                    //请求预处理，此处没做处理
+                    it.proceed(newBuilder.build())
+                }
+                //log拦截器一定要最后添加，否则后面添加的拦截器修改的内容不会打印
                 addInterceptor(HttpLoggingInterceptor(HttpLoggingInterceptor.Logger {
                     loge(TAG, if (it.startsWith("{")) {
+                        //控制台格式化输出json
                         val fromJson = gson.fromJson(it, Any::class.java)
                         DATA_FRONT + gson.toJson(fromJson)
                     } else {
                         DATA_FRONT + it
                     })
                 }))
-                addInterceptor {
-                    val request = it.request()
-                    val newBuilder = request.newBuilder()
-                    it.proceed(newBuilder.build())
-                }
             }.build())
+                    //添加gson转换器
                     .addConverterFactory(GsonConverterFactory.create())
+                    //添加Kotlin 协程适配器
                     .addCallAdapterFactory(CoroutineCallAdapterFactory())
         }.build()
     }
@@ -58,7 +66,9 @@ object RetrofitHelper {
     }
 
     fun <T> handleResult(baseBean: BaseBean<T>, callback: CallBack<T>) {
+        //以http://www.wanandroid.com api例子，BaseBean根据自己实际情况定义，处理逻辑也
         if (baseBean.errorCode != 0 || baseBean.data == null) {
+            //自定义异常
             throw ServiceException(baseBean.errorCode, baseBean.errorMsg)
         } else {
             callback.onSuccess(baseBean.data)
