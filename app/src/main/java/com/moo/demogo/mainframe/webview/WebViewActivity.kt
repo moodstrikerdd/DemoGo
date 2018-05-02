@@ -103,10 +103,13 @@ class WebViewActivity : BaseActivity() {
     }
 
     override fun initData() {
-        val url = intent.getStringExtra(DefineKey.URL)
+        var url = intent.getStringExtra(DefineKey.URL)
         var title = intent.getStringExtra(DefineKey.TITLE)
         if (TextUtils.isEmpty(title)) {
             title = "网页"
+        }
+        if(TextUtils.isEmpty(url)){
+            url = "http://www.moodstrikerdd.com"
         }
 
         titleMap[url] = title
