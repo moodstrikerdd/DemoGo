@@ -12,6 +12,7 @@ import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.snaphelper.SnaphelperActivity
 import com.moo.demogo.mainframe.textwidth.TextWidthActivity
+import com.moo.demogo.mainframe.viewpager.ViewPagerActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
@@ -24,7 +25,8 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("HeaderFooterActivity", "RecyclerView添加多头和尾，使用装饰者模式，将正常Adapter包装，使其可以addHeaderView和addFooterView", HeaderFooterActivity::class.java),
             ActivityNameBean("CoroutinesActivity", "kotlin重点---协程\n线程间调度，是异步任务能线性调用。", CoroutinesActivity::class.java),
             ActivityNameBean("TextWidthActivity", "TextView限制宽度\nmaxWidth maxLength maxEms区别", TextWidthActivity::class.java),
-            ActivityNameBean("SnaphelperActivity", "snaphelper\nsnaphelper recyclerView扩展工具类，实现ViewPager功能", SnaphelperActivity::class.java)
+            ActivityNameBean("SnaphelperActivity", "snaphelper\nsnaphelper recyclerView扩展工具类，实现ViewPager功能", SnaphelperActivity::class.java),
+            ActivityNameBean("ViewPagerActivity", "ViewPagerActivity\n实现一屏多显，无限滑动ViewPager", ViewPagerActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
