@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -40,5 +41,9 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun initData()
 
     abstract fun initView()
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
 
 }

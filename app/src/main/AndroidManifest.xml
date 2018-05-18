@@ -35,7 +35,10 @@
             android:name=".mainframe.textwidth.TextWidthActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".mainframe.snaphelper.SnaphelperActivity" />
-        <activity android:name=".mainframe.viewpager.ViewPagerActivity"></activity>
+        <activity android:name=".mainframe.viewpager.ViewPagerActivity" />
+        <activity android:name=".mainframe.service.ServiceActivity" />
+
+        <service android:name=".mainframe.service.CustomService" />
     </application>
 
 </manifest>

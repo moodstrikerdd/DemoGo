@@ -71,7 +71,7 @@ object RetrofitHelper {
             //自定义异常
             throw ServiceException(baseBean.errorCode, baseBean.errorMsg)
         } else {
-            callback.onSuccess(baseBean.data)
+            callback.onSuccess(baseBean.data!!)
         }
     }
 }
