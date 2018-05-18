@@ -7,6 +7,7 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.LinearSnapHelper
 import android.view.View
 import android.widget.Button
 import com.moo.adapter.ViewHolder
@@ -14,9 +15,6 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.event.BaseEvent
-import com.moo.demogo.event.EventAction
-import com.moo.demogo.event.EventAction2
-import com.moo.demogo.event.EventAction3
 import com.moo.demogo.utils.loge
 import kotlinx.android.synthetic.main.activity_service.*
 import org.greenrobot.eventbus.EventBus
@@ -60,6 +58,8 @@ class ServiceActivity : BaseActivity() {
     override fun initData() {
         menus.add("startService")
         menus.add("bindService")
+        menus.add("unBindService")
+        menus.add("stopService")
         rvContent.adapter.notifyDataSetChanged()
     }
 
@@ -72,6 +72,7 @@ class ServiceActivity : BaseActivity() {
                 btnService.setOnClickListener(onClickListener)
             }
         }
+        LinearSnapHelper().attachToRecyclerView(rvContent)
     }
 
     private val onClickListener = View.OnClickListener {
@@ -88,6 +89,14 @@ class ServiceActivity : BaseActivity() {
             menus[1] -> {
                 val intent = Intent(this, CustomService::class.java)
                 bindService(intent, conn, Service.BIND_AUTO_CREATE)
+            }
+            menus[2] -> {
+                unbindService(conn)
+            }
+            menus[3] -> {
+
+                val intent = Intent(this, CustomService::class.java)
+                stopService(intent)
             }
             else -> {
             }
