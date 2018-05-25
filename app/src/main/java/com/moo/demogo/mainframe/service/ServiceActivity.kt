@@ -15,6 +15,7 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.event.BaseEvent
+import com.moo.demogo.utils.doHttp
 import com.moo.demogo.utils.loge
 import kotlinx.android.synthetic.main.activity_service.*
 import org.greenrobot.eventbus.EventBus
@@ -50,7 +51,6 @@ class ServiceActivity : BaseActivity() {
 
     override fun onDestroy() {
         EventBus.getDefault().unregister(this)
-        unbindService(conn)
         super.onDestroy()
     }
 
@@ -81,10 +81,6 @@ class ServiceActivity : BaseActivity() {
             menus[0] -> {
                 val intent = Intent(this, CustomService::class.java)
                 startService(intent)
-//                val actionDelete = EventAction.ACTION_DELETE
-//                val actionDelete2 = EventAction2.ACTION_DELETE
-//                val actionDelete3 = EventAction3.ACTION_DELETE
-//                loge(message = "${actionDelete.name} ${actionDelete2.value} ${actionDelete3.name} ${actionDelete3.key} ${actionDelete3.value}")
             }
             menus[1] -> {
                 val intent = Intent(this, CustomService::class.java)
@@ -94,7 +90,6 @@ class ServiceActivity : BaseActivity() {
                 unbindService(conn)
             }
             menus[3] -> {
-
                 val intent = Intent(this, CustomService::class.java)
                 stopService(intent)
             }

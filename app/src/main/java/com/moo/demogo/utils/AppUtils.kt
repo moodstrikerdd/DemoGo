@@ -2,6 +2,10 @@ package com.moo.demogo.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+
 
 /**
  * @author moodstrikerdd
@@ -28,6 +32,25 @@ object AppUtils {
 
         return statusHeight
     }
+
+    /**
+     * 跳转到应用设置界面
+     */
+    @SuppressLint("ObsoleteSdkInt")
+    fun getAppDetailSettingIntent(context: Context) {
+        val localIntent = Intent()
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        if (Build.VERSION.SDK_INT >= 9) {
+            localIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
+            localIntent.data = Uri.fromParts("package", context.packageName, null)
+        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.action = Intent.ACTION_VIEW
+            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails")
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", context.packageName)
+        }
+        context.startActivity(localIntent)
+    }
+
 
     /**
      * 获取手机屏幕宽

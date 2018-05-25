@@ -1,6 +1,7 @@
 package com.moo.demogo.base
 
 import android.app.Application
+import com.moo.demogo.utils.SPUtils
 import kotlin.properties.Delegates
 
 /**
@@ -17,5 +18,6 @@ class BaseApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        SPUtils.init(this)
     }
 }

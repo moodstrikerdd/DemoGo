@@ -13,6 +13,7 @@ import com.moo.demogo.mainframe.service.ServiceActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.snaphelper.SnaphelperActivity
 import com.moo.demogo.mainframe.textwidth.TextWidthActivity
+import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.viewpager.ViewPagerActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -28,7 +29,8 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("TextWidthActivity", "TextView限制宽度\nmaxWidth maxLength maxEms区别", TextWidthActivity::class.java),
             ActivityNameBean("SnaphelperActivity", "snaphelper\nsnaphelper recyclerView扩展工具类，实现ViewPager功能", SnaphelperActivity::class.java),
             ActivityNameBean("ViewPagerActivity", "ViewPagerActivity\n实现一屏多显，无限滑动ViewPager", ViewPagerActivity::class.java),
-            ActivityNameBean("ServiceActivity", "ServiceActivity\nstart bind Service生命周期", ServiceActivity::class.java)
+            ActivityNameBean("ServiceActivity", "ServiceActivity\nstart bind Service生命周期", ServiceActivity::class.java),
+            ActivityNameBean("VideoActivity", "VideoActivity\n选择拍摄视频", VideoActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
