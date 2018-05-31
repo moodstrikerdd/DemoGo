@@ -1,20 +1,20 @@
 package com.moo.demogo.mainframe.video
 
-import android.Manifest
-import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.support.v4.app.ActivityCompat
+import android.support.annotation.RequiresApi
 import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
+import android.view.View
+import android.widget.Button
 import android.widget.MediaController
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
-import com.moo.demogo.utils.AppUtils
-import com.moo.demogo.utils.SPUtils
+import com.moo.demogo.utils.runtimepermission.Permission
+import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
+import com.moo.demogo.utils.UriUtils
 import com.moo.demogo.utils.toast
 import kotlinx.android.synthetic.main.activity_video.*
 import java.io.File
@@ -26,8 +26,8 @@ class VideoActivity : BaseActivity() {
     override fun getLayoutId() = R.layout.activity_video
 
     companion object {
-        const val REQUEST_CODE_CAMERA_PERMISSION = 100
         const val REQUEST_CODE_CAPTURE_VIDEO_ACTIVITY = 200
+        const val REQUEST_CODE_ALBUM_VIDEO_ACTIVITY = 100
     }
 
 
@@ -40,24 +40,30 @@ class VideoActivity : BaseActivity() {
         videoView.setOnCompletionListener {
             toast("播放完成")
         }
+
         button.setOnClickListener {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                toCamera()
+            RuntimePermissionHelper.permissions.addAll(Permission.CAMERA)
+            RuntimePermissionHelper.permissions.addAll(Permission.STORAGE)
+            RuntimePermissionHelper.requestPermissionsWithoutCheck(this)
+        }
+        button2.setOnClickListener {
+            if ((it as Button).text == "播放视频") {
+                videoView.start()
+                it.text = "显示图片"
+                image.visibility = View.GONE
             } else {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)
-                        || SPUtils.get(Manifest.permission.CAMERA, false) as Boolean) {
-                    AlertDialog.Builder(this)
-                            .setTitle("提示")
-                            .setMessage("当前应用缺少读写权限。\n请点击\"设置\",\"权限\"打开相应权限")
-                            .setPositiveButton("设置") { _, _ -> AppUtils.getAppDetailSettingIntent(this@VideoActivity) }
-                            .setNegativeButton("取消") { dialog, _ -> dialog.dismiss() }
-                            .create()
-                            .show()
-                } else {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_CAMERA_PERMISSION)
-                    SPUtils.put(Manifest.permission.CAMERA, true)
-                }
+                videoView.pause()
+                it.text = "播放视频"
+                image.visibility = View.VISIBLE
             }
+        }
+
+        button3.setOnClickListener {
+            val intent = Intent()
+            intent.type = "video/*"
+            intent.action = Intent.ACTION_GET_CONTENT
+            intent.addCategory(Intent.CATEGORY_OPENABLE)
+            startActivityForResult(intent, REQUEST_CODE_ALBUM_VIDEO_ACTIVITY)
         }
     }
 
@@ -82,29 +88,41 @@ class VideoActivity : BaseActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_CAMERA_PERMISSION) {
-            grantResults.filter { it != PackageManager.PERMISSION_GRANTED }
-                    .forEach {
-                        toast(message = "必须同意所有该类权限才能使用本程序")
-                        return
-                    }
+        RuntimePermissionHelper.onRequestPermissionsResult(this, requestCode, permissions, grantResults) {
             toCamera()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (data == null) {
+            return
+        }
+        toast(message = "Video saved to:\n" + data.data!!)
         if (requestCode == REQUEST_CODE_CAPTURE_VIDEO_ACTIVITY) {
             if (resultCode == RESULT_OK) {
                 // Video captured and saved to fileUri specified in the Intent
-                toast(message = "Video saved to:\n" + data.data!!)
+                val mediaMetadataRetriever = MediaMetadataRetriever()
+                mediaMetadataRetriever.setDataSource(videoFile.absolutePath)
+                val frameAtTime = mediaMetadataRetriever.frameAtTime
+                image.setImageBitmap(frameAtTime)
                 //Display the video
                 videoView.setVideoURI(videoFileUri)
                 videoView.requestFocus()
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                // User cancelled the video capture
-            } else {
-                // Video capture failed, advise user
             }
+        } else if (requestCode == REQUEST_CODE_ALBUM_VIDEO_ACTIVITY) {
+            videoFileUri = data.data
+            val path = UriUtils.getPath(this, videoFileUri)
+            videoFile = File(path)
+
+
+            val mediaMetadataRetriever = MediaMetadataRetriever()
+            mediaMetadataRetriever.setDataSource(videoFile.absolutePath)
+            val frameAtTime = mediaMetadataRetriever.frameAtTime
+            image.setImageBitmap(frameAtTime)
+            //Display the video
+            videoView.setVideoURI(videoFileUri)
+            videoView.requestFocus()
         }
     }
 
