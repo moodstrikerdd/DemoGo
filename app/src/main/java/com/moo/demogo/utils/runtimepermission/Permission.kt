@@ -8,7 +8,7 @@ import android.text.TextUtils
 /**
  * @author moodstrikerdd
  * @date 2018/5/31
- * @label
+ * @label 6.0运行时权限
  */
 object Permission {
 
@@ -61,26 +61,66 @@ object Permission {
             SMS = arrayOf()
             STORAGE = arrayOf()
         } else {
-            CALENDAR = arrayOf(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            CALENDAR = arrayOf(
+                    Manifest.permission.READ_CALENDAR,
+                    Manifest.permission.WRITE_CALENDAR)
 
-            CAMERA = arrayOf(Manifest.permission.CAMERA)
+            CAMERA = arrayOf(
+                    Manifest.permission.CAMERA)
 
-            CONTACTS = arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS, Manifest.permission.GET_ACCOUNTS)
+            CONTACTS = arrayOf(
+                    Manifest.permission.READ_CONTACTS,
+                    Manifest.permission.WRITE_CONTACTS,
+                    Manifest.permission.GET_ACCOUNTS)
 
-            LOCATION = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+            LOCATION = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
 
-            MICROPHONE = arrayOf(Manifest.permission.RECORD_AUDIO)
+            MICROPHONE = arrayOf(
+                    Manifest.permission.RECORD_AUDIO)
 
-            PHONE = arrayOf(Manifest.permission.READ_PHONE_STATE, Manifest.permission.CALL_PHONE, Manifest.permission.READ_CALL_LOG, Manifest.permission.WRITE_CALL_LOG, Manifest.permission.USE_SIP, Manifest.permission.PROCESS_OUTGOING_CALLS)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                PHONE = arrayOf(
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.READ_PHONE_NUMBERS,
+                        Manifest.permission.ANSWER_PHONE_CALLS,
+                        Manifest.permission.ADD_VOICEMAIL,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.READ_CALL_LOG,
+                        Manifest.permission.WRITE_CALL_LOG,
+                        Manifest.permission.USE_SIP,
+                        Manifest.permission.PROCESS_OUTGOING_CALLS)
+            } else {
+                PHONE = arrayOf(
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.ADD_VOICEMAIL,
+                        Manifest.permission.CALL_PHONE,
+                        Manifest.permission.READ_CALL_LOG,
+                        Manifest.permission.WRITE_CALL_LOG,
+                        Manifest.permission.USE_SIP,
+                        Manifest.permission.PROCESS_OUTGOING_CALLS)
+            }
 
-            SENSORS = arrayOf(Manifest.permission.BODY_SENSORS)
+            SENSORS = arrayOf(
+                    Manifest.permission.BODY_SENSORS)
 
-            SMS = arrayOf(Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_WAP_PUSH, Manifest.permission.RECEIVE_MMS)
+            SMS = arrayOf(
+                    Manifest.permission.SEND_SMS,
+                    Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.RECEIVE_WAP_PUSH,
+                    Manifest.permission.RECEIVE_MMS)
 
-            STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            STORAGE = arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
     }
 
+    /**
+     * 获取单个权限的名称
+     */
     fun getPermissionName(permission: String): String {
         var permissionName = ""
         when {
@@ -97,6 +137,9 @@ object Permission {
         return permissionName
     }
 
+    /**
+     * 获取权限的拼接名称
+     */
     fun getPermissionName(permission: Array<String>): String {
         val sb = StringBuilder()
         permission.forEach {
