@@ -2,6 +2,7 @@ package com.moo.demogo.mainframe.headerandfooter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
+import android.view.View
 import com.moo.adapter.ViewHolder
 import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.HeaderFooterAdapter
@@ -11,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_header_footer.*
 
 class HeaderFooterActivity : BaseActivity() {
     private val data = arrayListOf<String>()
-    private var adapter: HeaderFooterAdapter? = null
+    private lateinit var adapter: HeaderFooterAdapter
 
     override fun getLayoutId(): Int {
         return R.layout.activity_header_footer
@@ -21,6 +22,11 @@ class HeaderFooterActivity : BaseActivity() {
         adapter = object : HeaderFooterAdapter(this, object : CommonAdapter<String>(this, R.layout.item_side_slip, data) {
             override fun convert(holder: ViewHolder, t: String) {
                 holder.setText(R.id.tvItemName, t)
+                holder.itemView.setOnClickListener {
+                    adapter.removeHeaderView(0)
+                    adapter.removeFooterView(0)
+                    adapter.notifyDataSetChanged()
+                }
             }
         }) {
             override fun convertFooterViews(footerHolders: SparseArrayCompat<ViewHolder>) {
@@ -35,12 +41,12 @@ class HeaderFooterActivity : BaseActivity() {
                 }
             }
         }
-        adapter?.addHeaderView(R.layout.layout_header_footer)
-        adapter?.addHeaderView(R.layout.layout_header_footer)
-        adapter?.addHeaderView(R.layout.layout_header_footer)
-        adapter?.addFooterView(R.layout.layout_header_footer)
-        adapter?.addFooterView(R.layout.layout_header_footer)
-        adapter?.addFooterView(R.layout.layout_header_footer)
+        adapter.addHeaderView(R.layout.layout_header_footer)
+        adapter.addHeaderView(R.layout.layout_header_footer)
+        adapter.addHeaderView(R.layout.layout_header_footer)
+        adapter.addFooterView(R.layout.layout_header_footer)
+        adapter.addFooterView(R.layout.layout_header_footer)
+        adapter.addFooterView(R.layout.layout_header_footer)
 
         rvContent.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         rvContent.adapter = adapter
@@ -50,7 +56,7 @@ class HeaderFooterActivity : BaseActivity() {
         for (i in 0..20) {
             data.add("itemView" + (i + 1))
         }
-        adapter?.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
     }
 
 }

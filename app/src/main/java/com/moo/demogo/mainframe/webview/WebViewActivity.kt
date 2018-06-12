@@ -10,13 +10,18 @@ import android.text.TextUtils
 import android.webkit.*
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
+import com.moo.demogo.bean.HotWebBean
 import com.moo.demogo.constant.DefineKey
+import com.moo.demogo.utils.toast
 import kotlinx.android.synthetic.main.activity_web_view.*
+import kotlin.properties.Delegates
 
 
 @SuppressLint("SetJavaScriptEnabled")
 class WebViewActivity : BaseActivity() {
-
+    private var hotWebBean: HotWebBean by Delegates.observable(HotWebBean()) { property, oldValue, newValue ->
+        toast(hotWebBean.toString())
+    }
     private val titleMap: HashMap<String, String> = hashMapOf()
 
     companion object {
@@ -99,6 +104,7 @@ class WebViewActivity : BaseActivity() {
     }
 
     private fun dealWithUrl(view: WebView, url: String): Boolean {
+        hotWebBean = HotWebBean(link = url)
         return false
     }
 
@@ -108,10 +114,10 @@ class WebViewActivity : BaseActivity() {
         if (TextUtils.isEmpty(title)) {
             title = "网页"
         }
-        if(TextUtils.isEmpty(url)){
+        if (TextUtils.isEmpty(url)) {
             url = "http://www.moodstrikerdd.com"
         }
-
+        hotWebBean.link = url
         titleMap[url] = title
         topBar.tvTitleText = title
         webView.loadUrl(url)

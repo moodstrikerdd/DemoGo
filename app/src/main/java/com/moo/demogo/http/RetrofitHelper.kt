@@ -52,7 +52,7 @@ object RetrofitHelper {
                     } else {
                         DATA_FRONT + it
                     })
-                }))
+                }).setLevel(HttpLoggingInterceptor.Level.BODY))
             }.build())
                     //添加gson转换器
                     .addConverterFactory(GsonConverterFactory.create())

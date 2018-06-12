@@ -6,6 +6,8 @@
 
     <color name="dividerGray">#dbdbdb</color>
 
+    <color name="textColorLevel1">#333333</color>
+    <color name="textColorLevel2">#666666</color>
+    <color name="textColorLevel3">#999999</color>
 
-    <color name="adf">#0097A7</color>
 </resources>

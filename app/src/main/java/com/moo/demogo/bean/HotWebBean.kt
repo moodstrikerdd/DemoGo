@@ -11,7 +11,11 @@ data class HotWebBean(var icon: String? = null,
                       var link: String? = null,
                       var name: String? = null,
                       var order: Int = 0,
-                      var visible: Int = 0)
+                      var visible: Int = 0){
+    override fun toString(): String {
+        return "HotWebBean(icon=$icon, id=$id, link=$link, name=$name, order=$order, visible=$visible)"
+    }
+}
 
 /**
  * icon :

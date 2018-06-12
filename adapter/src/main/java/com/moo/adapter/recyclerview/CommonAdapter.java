@@ -1,6 +1,7 @@
 package com.moo.adapter.recyclerview;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,7 +47,9 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
 
 
     protected void setListener(final ViewGroup parent, final ViewHolder viewHolder, int viewType) {
-        if (!isEnabled(viewType)) return;
+        if (!isEnabled(viewType)) {
+            return;
+        }
         viewHolder.getConvertView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +85,4 @@ public abstract class CommonAdapter<T> extends RecyclerView.Adapter<ViewHolder> 
     public int getItemCount() {
         return mDatas.size();
     }
-
-
 }

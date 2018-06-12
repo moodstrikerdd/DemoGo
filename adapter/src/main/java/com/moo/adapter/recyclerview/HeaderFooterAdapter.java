@@ -40,6 +40,14 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<ViewHolder> {
         addHeaderView(headerView);
     }
 
+    public void removeHeaderView(int index) {
+        if (index < 0 || index >= headerViews.size()) {
+            return;
+        }
+        headerViews.removeAt(index);
+        headerHolders.removeAt(index);
+    }
+
     public void addHeaderView(View headerView) {
         int index = headerViews.size() + HEADER_TYPE_START_INDEX;
         headerViews.put(index, headerView);
@@ -50,6 +58,15 @@ public class HeaderFooterAdapter extends RecyclerView.Adapter<ViewHolder> {
         View footerView = LayoutInflater.from(mContext).inflate(layoutId, null);
         addFooterView(footerView);
     }
+
+    public void removeFooterView(int index) {
+        if (index < 0 || index >= footerViews.size()) {
+            return;
+        }
+        footerViews.removeAt(index);
+        footerHolders.removeAt(index);
+    }
+
 
     public void addFooterView(View footerView) {
         int index = footerViews.size() + FOOTER_TYPE_START_INDEX;
