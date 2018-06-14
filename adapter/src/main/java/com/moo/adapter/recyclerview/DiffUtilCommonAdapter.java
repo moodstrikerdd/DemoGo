@@ -32,6 +32,9 @@ public abstract class DiffUtilCommonAdapter<T> extends CommonAdapter<T> {
         data.addAll(mDatas);
         data.addAll(addData);
         setData(data);
+//        mDatas.clear();
+//        mDatas.addAll(data);
+//        notifyDataSetChanged();
     }
 
     public void setData(List<T> data) {
