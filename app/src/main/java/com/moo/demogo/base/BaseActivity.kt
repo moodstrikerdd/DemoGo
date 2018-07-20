@@ -42,8 +42,4 @@ abstract class BaseActivity : AppCompatActivity() {
 
     abstract fun initView()
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
 }

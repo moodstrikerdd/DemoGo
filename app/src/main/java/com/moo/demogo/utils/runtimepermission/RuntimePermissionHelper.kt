@@ -66,23 +66,11 @@ object RuntimePermissionHelper {
         ActivityCompat.requestPermissions(activity, permissionNotAllowed.toTypedArray(), requestCode)
     }
 
-    /**
-     * 方式二 请求权限
-     * 直接请求未授权的权限
-     */
-    fun requestPermissions2(activity: Activity, requestCode: Int = REQUEST_CODE_PERMISSION) {
-        if (Build.VERSION.SDK_INT < 23) {
-            return
-        }
-        RuntimePermissionHelper.requestCode = requestCode
-        permissionNotAllowed.forEach { SPUtils.put(it, true) }
-        ActivityCompat.requestPermissions(activity, permissionNotAllowed.toTypedArray(), requestCode)
-    }
 
     /**
      * 方式二 直接请求所有权限
      */
-    fun requestPermissionsWithoutCheck(activity: Activity, requestCode: Int = REQUEST_CODE_PERMISSION) {
+    fun requestPermissions2(activity: Activity, requestCode: Int = REQUEST_CODE_PERMISSION) {
         if (Build.VERSION.SDK_INT < 23) {
             return
         }

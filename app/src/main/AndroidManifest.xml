@@ -62,7 +62,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".mainframe.diffutil.DiffUtilActivity"></activity>
+        <activity android:name=".mainframe.diffutil.DiffUtilActivity" />
+        <activity android:name=".mainframe.share.ShareActivity"></activity>
     </application>
 
 </manifest>

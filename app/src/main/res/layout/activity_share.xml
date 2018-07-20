@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".mainframe.share.ShareActivity">
+
+    <com.moo.demogo.commonView.CommTopBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ivLeftSrc="@mipmap/icon_back_normal"
+        app:needPadding="true"
+        app:tvTitleText="分享" />
+
+    <TextView
+        android:id="@+id/tvShareAll"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="分享所有"
+        android:onClick="shareAll"
+        android:textColor="@color/textColorLevel1" />
+
+    <TextView
+        android:id="@+id/TvShareWeChat"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:onClick="shareWeChat"
+        android:text="分享微信"
+        android:textColor="@color/textColorLevel1" />
+
+    <TextView
+        android:id="@+id/tvShareQq"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        android:text="分享QQ"
+        android:onClick="shareQq"
+        android:textColor="@color/textColorLevel1" />
+
+</LinearLayout>
