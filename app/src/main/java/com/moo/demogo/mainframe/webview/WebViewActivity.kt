@@ -10,19 +10,20 @@ import android.text.TextUtils
 import android.webkit.*
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
-import com.moo.demogo.bean.HotWebBean
 import com.moo.demogo.constant.DefineKey
-import com.moo.demogo.utils.toast
 import kotlinx.android.synthetic.main.activity_web_view.*
-import kotlin.properties.Delegates
+import java.lang.StringBuilder
+import java.net.URLEncoder
 
 
 @SuppressLint("SetJavaScriptEnabled")
 class WebViewActivity : BaseActivity() {
-    private var hotWebBean: HotWebBean by Delegates.observable(HotWebBean()) { property, oldValue, newValue ->
-        toast(hotWebBean.toString())
-    }
     private val titleMap: HashMap<String, String> = hashMapOf()
+
+    private lateinit var url: String
+    private lateinit var title: String
+    private var usePost = false
+    private lateinit var params: HashMap<String, String>
 
     companion object {
         fun intentStart(context: Context, url: String, title: String?) {
@@ -31,9 +32,25 @@ class WebViewActivity : BaseActivity() {
             intent.putExtra(DefineKey.TITLE, title ?: "网页")
             context.startActivity(intent)
         }
+
+        fun intentStart(context: Context, url: String, title: String?, params: HashMap<String, String>) {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(DefineKey.USE_POST, true)
+            intent.putExtra(DefineKey.URL, url)
+            intent.putExtra(DefineKey.TITLE, title ?: "网页")
+            intent.putExtra(DefineKey.PARAMS_MAP, params)
+            context.startActivity(intent)
+        }
     }
 
     override fun getLayoutId(): Int = R.layout.activity_web_view
+
+    override fun initIntentData(intent: Intent) {
+        url = intent.getStringExtra(DefineKey.URL)
+        title = intent.getStringExtra(DefineKey.TITLE)
+        usePost = intent.getBooleanExtra(DefineKey.USE_POST, false)
+        params = intent.getSerializableExtra(DefineKey.PARAMS_MAP) as HashMap<String, String>
+    }
 
     override fun initView() {
         initWebSetting()
@@ -72,10 +89,11 @@ class WebViewActivity : BaseActivity() {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                    return dealWithUrl(view, url)
+                return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                    dealWithUrl(view, url)
+                } else {
+                    super.shouldOverrideUrlLoading(view, url)
                 }
-                return super.shouldOverrideUrlLoading(view, url)
             }
 
             override fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?) {
@@ -87,7 +105,7 @@ class WebViewActivity : BaseActivity() {
         webView.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView, title: String) {
                 super.onReceivedTitle(view, title)
-                if (titleMap[view.url] == null) {
+                if (titleMap[view.url] == null || titleMap[view.url] == "网页") {
                     titleMap[view.url] = title
                 }
                 topBar.tvTitleText = titleMap[view.url] ?: "网页"
@@ -104,23 +122,54 @@ class WebViewActivity : BaseActivity() {
     }
 
     private fun dealWithUrl(view: WebView, url: String): Boolean {
-        hotWebBean = HotWebBean(link = url)
+        if (usePost) {
+            WebViewActivity.intentStart(this, url, null)
+            return true
+        }
         return false
     }
 
     override fun initData() {
-        var url = intent.getStringExtra(DefineKey.URL)
-        var title = intent.getStringExtra(DefineKey.TITLE)
         if (TextUtils.isEmpty(title)) {
             title = "网页"
         }
         if (TextUtils.isEmpty(url)) {
             url = "http://www.moodstrikerdd.com"
         }
-        hotWebBean.link = url
         titleMap[url] = title
         topBar.tvTitleText = title
-        webView.loadUrl(url)
+        if (usePost) {
+            val sb = StringBuilder()
+            params.forEach { key, value ->
+                sb.append("$key=${URLEncoder.encode(value, "UTF-8")}")
+            }
+            webView.postUrl(url, sb.toString().toByteArray())
+        } else {
+            webView.loadUrl(url)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        webView.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        webView.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        webView.destroy()
+    }
+
+    override fun onBackPressed() {
+        if (webView != null && webView.canGoBack()) {
+            webView.goBack()
+        } else {
+            finish()
+        }
     }
 
 }

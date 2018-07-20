@@ -1,12 +1,12 @@
 package com.moo.demogo.base
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
-import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -21,6 +21,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutId())
         initStatusBar()
+        initIntentData(intent)
         initView()
         initData()
     }
@@ -41,5 +42,9 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun initData()
 
     abstract fun initView()
+
+    open fun initIntentData(intent: Intent) {
+
+    }
 
 }
