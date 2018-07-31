@@ -3,6 +3,8 @@ package com.moo.demogo.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Build
 
@@ -61,4 +63,32 @@ object AppUtils {
      * 获取手机屏幕高
      */
     fun getScreenHeigth(context: Context) = context.resources.displayMetrics.heightPixels
+
+    /**
+     * 是否有网络
+     */
+    fun hasNet(context: Context): Boolean {
+        var hasNet = false
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        if (connectivityManager != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                connectivityManager.allNetworks.forEach {
+                    val networkInfo = connectivityManager.getNetworkInfo(it)
+                    if (networkInfo.state == NetworkInfo.State.CONNECTED) {
+                        hasNet = true
+                    }
+                }
+            } else {
+                connectivityManager.allNetworkInfo.forEach {
+                    if (it.state == NetworkInfo.State.CONNECTED) {
+                        hasNet = true
+                    }
+                }
+            }
+        }
+        if (!hasNet) {
+            toast("无网络连接，请检查网络！")
+        }
+        return hasNet
+    }
 }

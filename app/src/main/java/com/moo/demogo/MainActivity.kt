@@ -10,6 +10,7 @@ import com.moo.demogo.bean.ActivityNameBean
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
 import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
 import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
+import com.moo.demogo.mainframe.ioc.IocActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
 import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
@@ -28,7 +29,8 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("ServiceActivity", "ServiceActivity\nstart bind Service生命周期", ServiceActivity::class.java),
             ActivityNameBean("VideoActivity", "VideoActivity\n选择拍摄视频", VideoActivity::class.java),
             ActivityNameBean("DiffUtilActivity", "DiffUtilActivity\nDiffUtil封装通用adapter", DiffUtilActivity::class.java),
-            ActivityNameBean("ShareActivity", "ShareActivity\n调用系统分享", ShareActivity::class.java)
+            ActivityNameBean("ShareActivity", "ShareActivity\n调用系统分享", ShareActivity::class.java),
+            ActivityNameBean("IocActivity", "IocActivity\n自定义ioc框架实现点击事件，网络判断，禁止重复点击", IocActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main

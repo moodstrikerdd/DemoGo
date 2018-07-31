@@ -49,7 +49,9 @@ class WebViewActivity : BaseActivity() {
         url = intent.getStringExtra(DefineKey.URL)
         title = intent.getStringExtra(DefineKey.TITLE)
         usePost = intent.getBooleanExtra(DefineKey.USE_POST, false)
-        params = intent.getSerializableExtra(DefineKey.PARAMS_MAP) as HashMap<String, String>
+        if (intent.hasExtra(DefineKey.PARAMS_MAP)) {
+            params = intent.getSerializableExtra(DefineKey.PARAMS_MAP) as HashMap<String, String>
+        }
     }
 
     override fun initView() {
