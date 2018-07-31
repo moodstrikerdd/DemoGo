@@ -1,6 +1,7 @@
 package com.moo.demogo.mainframe.ioc
 
 import android.app.Activity
+import android.support.v4.app.Fragment
 import android.view.View
 import com.moo.demogo.utils.AppUtils
 
@@ -12,8 +13,8 @@ import com.moo.demogo.utils.AppUtils
 class AnnotationUtils {
     private val offsetTimes = hashMapOf<Int, Long>()
 
-    fun inject(activity: Activity) {
-        val javaClass = activity.javaClass
+    private fun injectOnClick(any: Any, contentView: View?) {
+        val javaClass = any.javaClass
         val declaredMethods = javaClass.declaredMethods
         if (declaredMethods != null && declaredMethods.isNotEmpty()) {
             declaredMethods.forEach { method ->
@@ -27,16 +28,19 @@ class AnnotationUtils {
                         offsetTime = limitRepeatClick.value
                     }
                     values.forEach { viewId ->
-                        val view = activity.findViewById<View>(viewId)
-                                ?: throw RuntimeException("OnClick注解中存在无效id")
+                        val view = (if (any is Activity) {
+                            any.findViewById(viewId)
+                        } else {
+                            contentView?.findViewById<View>(viewId)
+                        }) ?: throw RuntimeException("OnClick注解中存在无效id")
                         view.setOnClickListener {
                             val lastTimeMillis = offsetTimes[viewId] ?: 0L
                             val currentTimeMillis = System.currentTimeMillis()
                             if (offsetTime == 0L || currentTimeMillis - lastTimeMillis >= offsetTime) {
                                 offsetTimes[viewId] = currentTimeMillis
-                                if (checkNet == null || checkNet.value.isEmpty() || !checkNet.value.contains(viewId) || AppUtils.hasNet(activity)) {
+                                if (checkNet == null || checkNet.value.isEmpty() || !checkNet.value.contains(viewId) || AppUtils.hasNet()) {
                                     method.isAccessible = true
-                                    method.invoke(activity, view)
+                                    method.invoke(any, view)
                                 }
                             }
                         }
@@ -44,5 +48,13 @@ class AnnotationUtils {
                 }
             }
         }
+    }
+
+    fun injectOnClick(activity: Activity) {
+        injectOnClick(activity, null)
+    }
+
+    fun injectOnClick(fragment: Fragment, contentView: View) {
+        injectOnClick(any = fragment, contentView = contentView)
     }
 }

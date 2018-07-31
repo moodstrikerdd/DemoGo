@@ -19,7 +19,8 @@ class IocActivity : BaseActivity() {
     }
 
     override fun initView() {
-        AnnotationUtils().inject(this)
+        AnnotationUtils().injectOnClick(this)
+        supportFragmentManager.beginTransaction().add(R.id.flContain, IocFragment.newInstance()).commit()
     }
 
     @OnClick(R.id.btnClick1, R.id.btnClick2)

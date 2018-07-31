@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Build
+import com.moo.demogo.base.BaseApp
 
 
 /**
@@ -67,9 +68,9 @@ object AppUtils {
     /**
      * 是否有网络
      */
-    fun hasNet(context: Context): Boolean {
+    fun hasNet(): Boolean {
         var hasNet = false
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
+        val connectivityManager = BaseApp.instance.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         if (connectivityManager != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 connectivityManager.allNetworks.forEach {

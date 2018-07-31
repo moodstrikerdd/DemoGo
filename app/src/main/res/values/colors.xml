@@ -7,6 +7,8 @@
 
     <color name="dividerGray">#dbdbdb</color>
 
+    <color name="dividerColor">#D9D9D9</color>
+
     <color name="textColorLevel1">#333333</color>
     <color name="textColorLevel2">#666666</color>
     <color name="textColorLevel3">#999999</color>
