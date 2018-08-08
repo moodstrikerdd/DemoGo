@@ -46,8 +46,17 @@ class WebViewActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_web_view
 
     override fun initIntentData(intent: Intent) {
-        url = intent.getStringExtra(DefineKey.URL)
-        title = intent.getStringExtra(DefineKey.TITLE)
+        url = if (intent.hasExtra(DefineKey.URL)) {
+
+            intent.getStringExtra(DefineKey.URL)
+        } else {
+            "http://www.moodstrikerdd.com"
+        }
+        title = if (intent.hasExtra(DefineKey.TITLE)) {
+            intent.getStringExtra(DefineKey.TITLE)
+        } else {
+            "网页详情"
+        }
         usePost = intent.getBooleanExtra(DefineKey.USE_POST, false)
         if (intent.hasExtra(DefineKey.PARAMS_MAP)) {
             params = intent.getSerializableExtra(DefineKey.PARAMS_MAP) as HashMap<String, String>

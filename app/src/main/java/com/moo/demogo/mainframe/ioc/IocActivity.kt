@@ -26,7 +26,7 @@ class IocActivity : BaseActivity() {
     @OnClick(R.id.btnClick1, R.id.btnClick2)
     @CheckNet(R.id.btnClick2)
     @LimitRepeatClick
-    fun onClick(view: View) {
+    private fun onClick(view: View) {
         toast("${(view as Button).text}被点击了！")
     }
 }
