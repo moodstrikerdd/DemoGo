@@ -101,7 +101,7 @@ object RuntimePermissionHelper {
      * 2.跳转设置界面
      * 3.获取权限成功
      */
-    fun onRequestPermissionsResult2(activity: Activity, requestCode: Int, permissions: Array<out String>, grantResults: IntArray, success: (requestCode: Int) -> Unit) {
+    fun onRequestPermissionsResult2(activity: Activity, requestCode: Int, permissions: Array<out String>, grantResults: IntArray, success: ((requestCode: Int) -> Unit)?) {
         if (requestCode == RuntimePermissionHelper.requestCode) {
             val permissionsNotAllowed = permissions.filterIndexed { index, _ ->
                 grantResults[index] != PackageManager.PERMISSION_GRANTED
@@ -122,7 +122,9 @@ object RuntimePermissionHelper {
                     return
                 }
             }
-            success(requestCode)
+            if (success != null) {
+                success(requestCode)
+            }
         }
     }
 }

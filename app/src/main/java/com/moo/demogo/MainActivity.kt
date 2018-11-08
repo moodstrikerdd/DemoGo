@@ -7,8 +7,10 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.RecycleViewDivider
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.bean.ActivityNameBean
+import com.moo.demogo.mainframe.camera.CameraActivity
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
 import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
+import com.moo.demogo.mainframe.dir.DirActivity
 import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.ioc.IocActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
@@ -16,6 +18,8 @@ import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
+import com.moo.demogo.utils.runtimepermission.Permission
+import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -30,7 +34,9 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("VideoActivity", "VideoActivity\n选择拍摄视频", VideoActivity::class.java),
             ActivityNameBean("DiffUtilActivity", "DiffUtilActivity\nDiffUtil封装通用adapter", DiffUtilActivity::class.java),
             ActivityNameBean("ShareActivity", "ShareActivity\n调用系统分享", ShareActivity::class.java),
-            ActivityNameBean("IocActivity", "IocActivity\n自定义ioc框架实现点击事件，网络判断，禁止重复点击", IocActivity::class.java)
+            ActivityNameBean("IocActivity", "IocActivity\n自定义ioc框架实现点击事件，网络判断，禁止重复点击", IocActivity::class.java),
+            ActivityNameBean("CameraActivity", "CameraActivity\n自定义相机", CameraActivity::class.java),
+            ActivityNameBean("DirActivity", "DirActivity\nandroid文件目录获取", DirActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
@@ -55,5 +61,16 @@ class MainActivity : BaseActivity() {
             }
         }
         recyclerView.addItemDecoration(RecycleViewDivider(this, RecycleViewDivider.VERTICAL, 10, resources.getColor(R.color.dividerGray)))
+
+        RuntimePermissionHelper.permissions.clear()
+        RuntimePermissionHelper.permissions.addAll(Permission.CAMERA)
+        RuntimePermissionHelper.permissions.addAll(Permission.STORAGE)
+        RuntimePermissionHelper.permissions.addAll(Permission.MICROPHONE)
+        RuntimePermissionHelper.requestPermissions2(this)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        RuntimePermissionHelper.onRequestPermissionsResult2(this, requestCode, permissions, grantResults, null)
     }
 }
