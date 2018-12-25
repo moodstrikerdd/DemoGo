@@ -1,5 +1,6 @@
 package com.moo.demogo.mainframe.diffutil
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MotionEvent
 import android.view.ViewConfiguration
@@ -51,11 +52,12 @@ class DiffUtilActivity : BaseActivity() {
     }
     private var isShowLoading = false
     private var startLoading = false
-    private var isLoadingMode = true;
+    private var isLoading = false
+    private var isLoadingMode = true
     var startX = 0f
     var startY = 0f
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
-        if (startLoading) {
+        if (isLoading) {
             return true
         }
         when (ev.action) {
@@ -71,7 +73,10 @@ class DiffUtilActivity : BaseActivity() {
                         if (offsetY < -tvName.measuredHeight * 2) {
                             offsetY = -tvName.measuredHeight * 2
                             startLoading = true
+                        } else {
+                            startLoading = false
                         }
+
                         if (offsetY > 0) {
                             offsetY = 0
                             isShowLoading = false
@@ -94,11 +99,19 @@ class DiffUtilActivity : BaseActivity() {
             MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
                 if (isShowLoading) {
                     if (startLoading) {
-
+                        isLoading = true
+                        Handler().postDelayed({
+                            llContent.scrollTo(0, 0)
+                            data.addAll(data)
+                            rvContent.adapter.notifyDataSetChanged()
+                            isShowLoading = false
+                            startLoading = false
+                            isLoading = false
+                        }, 500L)
                     } else {
                         llContent.scrollTo(0, 0)
+                        isShowLoading = false
                     }
-                    isShowLoading = false
                     return true
                 }
             }

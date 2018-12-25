@@ -1,6 +1,9 @@
 package com.moo.demogo.base
 
+import android.app.ActivityManager
 import android.app.Application
+import android.content.Context
+import com.moo.demogo.mainframe.exception.ExceptionCatcher
 import com.moo.demogo.utils.SPUtils
 import kotlin.properties.Delegates
 
@@ -19,5 +22,6 @@ class BaseApp : Application() {
         super.onCreate()
         instance = this
         SPUtils.init(this)
+        Thread.setDefaultUncaughtExceptionHandler(ExceptionCatcher)
     }
 }

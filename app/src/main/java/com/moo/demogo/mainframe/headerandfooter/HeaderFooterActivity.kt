@@ -2,7 +2,6 @@ package com.moo.demogo.mainframe.headerandfooter
 
 import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.StaggeredGridLayoutManager
-import android.view.View
 import com.moo.adapter.ViewHolder
 import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.HeaderFooterAdapter

@@ -72,6 +72,7 @@
         <activity android:name=".mainframe.camera.CameraActivity" />
         <activity android:name=".mainframe.dir.DirActivity"
             android:screenOrientation="landscape"/>
+        <activity android:name=".mainframe.proxy.ProxyActivity" />
     </application>
 
 </manifest>

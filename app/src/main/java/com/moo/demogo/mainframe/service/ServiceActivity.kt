@@ -15,7 +15,6 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.event.BaseEvent
-import com.moo.demogo.utils.doHttp
 import com.moo.demogo.utils.loge
 import kotlinx.android.synthetic.main.activity_service.*
 import org.greenrobot.eventbus.EventBus

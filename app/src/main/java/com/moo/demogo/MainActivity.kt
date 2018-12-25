@@ -1,5 +1,6 @@
 package com.moo.demogo
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.moo.adapter.ViewHolder
@@ -13,13 +14,20 @@ import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
 import com.moo.demogo.mainframe.dir.DirActivity
 import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.ioc.IocActivity
+import com.moo.demogo.mainframe.proxy.ProxyActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
 import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
+import com.moo.demogo.utils.loge
 import com.moo.demogo.utils.runtimepermission.Permission
 import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -36,12 +44,74 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("ShareActivity", "ShareActivity\n调用系统分享", ShareActivity::class.java),
             ActivityNameBean("IocActivity", "IocActivity\n自定义ioc框架实现点击事件，网络判断，禁止重复点击", IocActivity::class.java),
             ActivityNameBean("CameraActivity", "CameraActivity\n自定义相机", CameraActivity::class.java),
-            ActivityNameBean("DirActivity", "DirActivity\nandroid文件目录获取", DirActivity::class.java)
+            ActivityNameBean("DirActivity", "DirActivity\nandroid文件目录获取", DirActivity::class.java),
+            ActivityNameBean("ProxyActivity", "ProxyActivity\njava动态代理", ProxyActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
+    @SuppressLint("CheckResult")
     override fun initData() {
+        val a: Int = 1000
+        val b: Int? = a
+        val c: Int? = a
+
+        loge("tag", "b == c ${b == c}")
+        loge("tag", "b === c ${b === c}")
+
+//        Flowable.create(FlowableOnSubscribe<Any> {
+//            Thread.sleep(2000)
+//            it.onNext("crash")
+//        }, BackpressureStrategy.BUFFER)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : Subscriber<Any>{
+//                    override fun onComplete() {
+//                    }
+//
+//                    override fun onSubscribe(s: Subscription?) {
+//                        s?.request(1)
+//                    }
+//
+//                    override fun onNext(t: Any?) {
+//                        if (t == "crash") {
+//                            throw RuntimeException("test crash")
+//                        }
+//                    }
+//
+//                    override fun onError(t: Throwable?) {
+//                    }
+//
+//                })
+
+//        Observable.create<String> {
+//            Thread.sleep(2000)
+//            it.onNext("crash")
+//        }.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : Observer<String> {
+//                    override fun onComplete() {
+//                    }
+//
+//                    override fun onSubscribe(d: Disposable) {
+//                    }
+//
+//                    override fun onNext(t: String) {
+//                        if (t == "crash") {
+//                            throw RuntimeException("test crash")
+//                        }
+//                    }
+//
+//                    override fun onError(e: Throwable) {
+//                    }
+//                })
+
+//        launch(UI) {
+//            launch(CommonPool) {
+//                Thread.sleep(2000)
+//            }.join()
+//            throw RuntimeException("test crash")
+//        }
     }
 
     override fun initView() {
