@@ -121,7 +121,7 @@ object Permission {
     /**
      * 获取单个权限的名称
      */
-    fun getPermissionName(permission: String): String {
+    private fun getPermissionName(permission: String): String {
         var permissionName = ""
         when {
             CALENDAR.contains(permission) -> permissionName = "日历"
@@ -148,7 +148,9 @@ object Permission {
                 sb.append("$permissionName、")
             }
         }
-        sb.deleteCharAt(sb.length - 1)
+        if (sb.isNotEmpty()) {
+            sb.deleteCharAt(sb.length - 1)
+        }
         return sb.toString()
     }
 }

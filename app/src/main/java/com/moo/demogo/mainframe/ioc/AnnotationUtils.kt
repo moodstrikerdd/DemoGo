@@ -3,6 +3,8 @@ package com.moo.demogo.mainframe.ioc
 import android.app.Activity
 import android.support.v4.app.Fragment
 import android.view.View
+import com.moo.demogo.mainframe.proxy.OnClickListenerNetProxy
+import com.moo.demogo.mainframe.proxy.OnClickListenerRepeatProxy
 import com.moo.demogo.utils.AppUtils
 
 /**
@@ -50,11 +52,46 @@ class AnnotationUtils {
         }
     }
 
+
+    private fun injectOnClickAop(any: Any, contentView: View?) {
+        val javaClass = any.javaClass
+        val declaredMethods = javaClass.declaredMethods
+        if (declaredMethods != null && declaredMethods.isNotEmpty()) {
+            declaredMethods.forEach { method ->
+                val onClick = method.getAnnotation(OnClick::class.java)
+                val checkNet = method.getAnnotation(CheckNet::class.java)
+                val limitRepeatClick = method.getAnnotation(LimitRepeatClick::class.java)
+                if (onClick != null) {
+                    val values = onClick.value
+                    values.forEach { viewId ->
+                        val view = (if (any is Activity) {
+                            any.findViewById(viewId)
+                        } else {
+                            contentView?.findViewById<View>(viewId)
+                        }) ?: throw RuntimeException("OnClick注解中存在无效id")
+                        var onClickListener = View.OnClickListener {
+                            method.isAccessible = true
+                            method.invoke(any, it)
+                        }
+                        if (checkNet != null && (checkNet.value.isEmpty() || viewId in checkNet.value)) {
+                            onClickListener = OnClickListenerNetProxy(onClickListener)
+                        }
+
+                        if (limitRepeatClick != null) {
+                            onClickListener = OnClickListenerRepeatProxy(onClickListener, limitRepeatClick.value)
+                        }
+                        view.setOnClickListener(onClickListener)
+                    }
+                }
+            }
+        }
+    }
+
     fun injectOnClick(activity: Activity) {
-        injectOnClick(activity, null)
+        injectOnClickAop(activity, null)
     }
 
     fun injectOnClick(fragment: Fragment, contentView: View) {
-        injectOnClick(any = fragment, contentView = contentView)
+        injectOnClickAop(any = fragment, contentView = contentView)
     }
 }

@@ -20,14 +20,8 @@ import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
-import com.moo.demogo.utils.loge
 import com.moo.demogo.utils.runtimepermission.Permission
 import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
-import io.reactivex.Observable
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -50,14 +44,7 @@ class MainActivity : BaseActivity() {
 
     override fun getLayoutId(): Int = R.layout.activity_main
 
-    @SuppressLint("CheckResult")
     override fun initData() {
-        val a: Int = 1000
-        val b: Int? = a
-        val c: Int? = a
-
-        loge("tag", "b == c ${b == c}")
-        loge("tag", "b === c ${b === c}")
 
 //        Flowable.create(FlowableOnSubscribe<Any> {
 //            Thread.sleep(2000)
@@ -65,12 +52,11 @@ class MainActivity : BaseActivity() {
 //        }, BackpressureStrategy.BUFFER)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Subscriber<Any>{
+//                .subscribe(object : Subscriber<Any> {
 //                    override fun onComplete() {
 //                    }
 //
 //                    override fun onSubscribe(s: Subscription?) {
-//                        s?.request(1)
 //                    }
 //
 //                    override fun onNext(t: Any?) {
@@ -83,7 +69,36 @@ class MainActivity : BaseActivity() {
 //                    }
 //
 //                })
-
+//        Flowable.interval(1, TimeUnit.SECONDS, Schedulers.io())
+//                .flatMap {
+//                    loge(message = "flatMap$it")
+//                    Flowable.create(FlowableOnSubscribe<Any> { inner ->
+//                        val sleep = Random().nextInt(3)
+//                        loge(message = "Flowable sleep $sleep s")
+//                        Thread.sleep(sleep * 1000L)
+//                        loge(message = "inner start")
+//                        inner.onNext("$it")
+//                    }, BackpressureStrategy.BUFFER)
+//                }
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(object : Subscriber<Any> {
+//                    override fun onComplete() {
+//                    }
+//
+//                    override fun onSubscribe(s: Subscription?) {
+//                        s?.request(Long.MAX_VALUE)
+//                    }
+//
+//                    override fun onNext(t: Any?) {
+//                        val sleep = Random().nextInt(3)
+//                        loge(message = "onNext sleep $sleep s")
+//                        Thread.sleep(sleep * 1000L)
+//                        loge(message = "onNext $t")
+//                    }
+//
+//                    override fun onError(t: Throwable?) {
+//                    }
+//                })
 //        Observable.create<String> {
 //            Thread.sleep(2000)
 //            it.onNext("crash")
