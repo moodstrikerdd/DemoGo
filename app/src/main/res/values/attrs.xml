@@ -24,4 +24,23 @@
         <attr name="ivRightSrc" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="CommTextView">
+        <attr name="ctvTitleText" format="string" />
+        <attr name="ctvTitleTextSize" format="dimension" />
+        <attr name="ctvTitleTextColor" format="color" />
+
+        <attr name="ctvRightGravity" format="enum">
+            <enum name="right" value="0" />
+            <enum name="left" value="1" />
+        </attr>
+        <attr name="ctvRightSrc" format="reference" />
+
+        <attr name="ctvRightHint" format="string" />
+        <attr name="ctvRightHintColor" format="color" />
+
+        <attr name="ctvRightText" format="string" />
+        <attr name="ctvRightTextSize" format="dimension" />
+        <attr name="ctvRightTextColor" format="color" />
+    </declare-styleable>
+
 </resources>

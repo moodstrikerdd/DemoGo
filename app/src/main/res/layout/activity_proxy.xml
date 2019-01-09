@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/divider"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:showDividers="middle|end">
 
-</android.support.constraint.ConstraintLayout>
+    <com.moo.demogo.commonView.CommTextView
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:ctvRightHint="默认模式"
+        app:ctvTitleText="默认模式" />
+
+    <com.moo.demogo.commonView.CommTextView
+        android:id="@+id/text2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:ctvRightHint="默认模式"
+        app:ctvRightSrc="@mipmap/next"
+        app:ctvRightText="默认模式"
+        app:ctvTitleText="默认模式" />
+
+
+    <com.moo.demogo.commonView.CommTextView
+        android:id="@+id/text3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:ctvRightGravity="left"
+        app:ctvRightHint="自定义模式"
+        app:ctvRightHintColor="@color/colorPrimary"
+        app:ctvRightSrc="@mipmap/next"
+        app:ctvTitleText="自定义模式"
+        app:ctvTitleTextColor="@color/colorAccent"
+        app:ctvTitleTextSize="18sp" />
+
+    <com.moo.demogo.commonView.CommTextView
+        android:id="@+id/text4"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:ctvRightGravity="left"
+        app:ctvRightHint="自定义模式"
+        app:ctvRightHintColor="@color/colorPrimary"
+        app:ctvRightSrc="@mipmap/next"
+        app:ctvRightText="自定义模式"
+        app:ctvRightTextColor="@color/colorAccent"
+        app:ctvRightTextSize="18sp"
+        app:ctvTitleText="自定义模式"
+        app:ctvTitleTextColor="@color/colorAccent"
+        app:ctvTitleTextSize="18sp" />
+</LinearLayout>

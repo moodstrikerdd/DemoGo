@@ -19,12 +19,15 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        doInBeforeSetContent()
         setContentView(getLayoutId())
         initStatusBar()
         initIntentData(intent)
         initView()
         initData()
     }
+
+    open fun doInBeforeSetContent(){}
 
     private fun initStatusBar() {
         val sdkVersion = Build.VERSION.SDK_INT

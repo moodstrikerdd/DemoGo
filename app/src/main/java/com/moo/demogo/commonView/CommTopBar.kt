@@ -25,7 +25,7 @@ class CommTopBar @JvmOverloads constructor(
 
     private var mViewHolder: ViewHolder? = null
 
-    var needPadding by Delegates.observable(true) { _, _, new ->
+    var needPadding by Delegates.observable(false) { _, _, new ->
         val height = if (new) {
             AppUtils.getStatusHeight(context)
         } else {
@@ -86,6 +86,7 @@ class CommTopBar @JvmOverloads constructor(
 
     init {
         mViewHolder = ViewHolder.get(context, R.layout.layout_comm_top_bar, this, true)
+        needPadding = true
         val osa = context.obtainStyledAttributes(attrs, R.styleable.CommTopBar)
         initAttrs(osa)
         osa.recycle()
