@@ -14,14 +14,19 @@ import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
 import com.moo.demogo.mainframe.dir.DirActivity
 import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.ioc.IocActivity
+import com.moo.demogo.mainframe.ndk.NdkTest
+import com.moo.demogo.mainframe.ndk.NdkTest2
 import com.moo.demogo.mainframe.proxy.ProxyActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
 import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
 import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
+import com.moo.demogo.utils.loge
 import com.moo.demogo.utils.runtimepermission.Permission
 import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
+import io.reactivex.Flowable
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -45,6 +50,8 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initData() {
+        loge(message = NdkTest.get())
+        loge(message = NdkTest2.get())
 
 //        Flowable.create(FlowableOnSubscribe<Any> {
 //            Thread.sleep(2000)
