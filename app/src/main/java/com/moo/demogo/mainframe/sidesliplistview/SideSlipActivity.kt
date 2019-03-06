@@ -31,6 +31,11 @@ class SideSlipActivity : BaseActivity() {
         lvContent.adapter = adapter
 
         refresh.setOnRefreshListener { initData() }
+        val t = object :ThreadLocal<String>(){
+            override fun initialValue(): String {
+                return "abc"
+            }
+        }
     }
 
     override fun initData() {

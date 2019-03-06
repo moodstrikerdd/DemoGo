@@ -7,12 +7,13 @@ import android.net.Uri
 import android.net.http.SslError
 import android.os.Build
 import android.text.TextUtils
+import android.view.View
 import android.webkit.*
 import com.moo.demogo.R
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.constant.DefineKey
+import com.moo.demogo.utils.ViewShotUtils
 import kotlinx.android.synthetic.main.activity_web_view.*
-import java.lang.StringBuilder
 import java.net.URLEncoder
 
 
@@ -24,6 +25,8 @@ class WebViewActivity : BaseActivity() {
     private lateinit var title: String
     private var usePost = false
     private lateinit var params: HashMap<String, String>
+
+    private var webViewScale = 0f
 
     companion object {
         fun intentStart(context: Context, url: String, title: String?) {
@@ -41,6 +44,10 @@ class WebViewActivity : BaseActivity() {
             intent.putExtra(DefineKey.PARAMS_MAP, params)
             context.startActivity(intent)
         }
+    }
+
+    override fun doInBeforeSetContent() {
+//        WebView.enableSlowWholeDocumentDraw()
     }
 
     override fun getLayoutId(): Int = R.layout.activity_web_view
@@ -77,6 +84,8 @@ class WebViewActivity : BaseActivity() {
         webView.removeJavascriptInterface("accessibility")
         webView.removeJavascriptInterface("accessibilityTraversal")
 
+        webView.isDrawingCacheEnabled = true
+
         val settings = webView.settings
         settings.javaScriptEnabled = true
 
@@ -111,6 +120,10 @@ class WebViewActivity : BaseActivity() {
                 handler?.proceed()
             }
 
+            override fun onScaleChanged(view: WebView?, oldScale: Float, newScale: Float) {
+                super.onScaleChanged(view, oldScale, newScale)
+                webViewScale = newScale
+            }
         }
 
         webView.webChromeClient = object : WebChromeClient() {
@@ -129,6 +142,26 @@ class WebViewActivity : BaseActivity() {
             startActivity(intent)
         }
 
+        webView.setOnLongClickListener {
+            //            CodeUtils.analyzeBitmap(BitmapFactory.decodeResource(resources, R.mipmap.code), object : CodeUtils.AnalyzeCallback {
+//                override fun onAnalyzeSuccess(mBitmap: Bitmap?, result: String): Boolean {
+//                    if (!TextUtils.isEmpty(result)) {
+//                        toast(message = "二维码内容：$result")
+//                    }
+//                    return true
+//                }
+//
+//                override fun onAnalyzeFailed() {
+//
+//                }
+//            })
+            val bitmap = ViewShotUtils.webViewAllShot(webView,webViewScale)
+            if (bitmap != null) {
+                image.setImageBitmap(bitmap)
+                image.visibility = View.VISIBLE
+            }
+            true
+        }
 
     }
 

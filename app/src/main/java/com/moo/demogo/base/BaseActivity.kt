@@ -27,7 +27,7 @@ abstract class BaseActivity : AppCompatActivity() {
         initData()
     }
 
-    open fun doInBeforeSetContent(){}
+    open fun doInBeforeSetContent() {}
 
     private fun initStatusBar() {
         val sdkVersion = Build.VERSION.SDK_INT
@@ -48,6 +48,12 @@ abstract class BaseActivity : AppCompatActivity() {
 
     open fun initIntentData(intent: Intent) {
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val refWatcher = BaseApp.getRefWatcher(this)//1
+        refWatcher.watch(this)
     }
 
 }

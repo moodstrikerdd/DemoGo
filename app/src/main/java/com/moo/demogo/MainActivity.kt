@@ -1,6 +1,5 @@
 package com.moo.demogo
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.v7.widget.LinearLayoutManager
 import com.moo.adapter.ViewHolder
@@ -12,21 +11,30 @@ import com.moo.demogo.mainframe.camera.CameraActivity
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
 import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
 import com.moo.demogo.mainframe.dir.DirActivity
+import com.moo.demogo.mainframe.encryp.EncrypActivity
 import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.ioc.IocActivity
+import com.moo.demogo.mainframe.leakcanary.LeakCanaryActivity
 import com.moo.demogo.mainframe.ndk.NdkTest
 import com.moo.demogo.mainframe.ndk.NdkTest2
 import com.moo.demogo.mainframe.proxy.ProxyActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
 import com.moo.demogo.mainframe.share.ShareActivity
 import com.moo.demogo.mainframe.sidesliplistview.SideSlipActivity
+import com.moo.demogo.mainframe.socket.SocketActivity
 import com.moo.demogo.mainframe.video.VideoActivity
 import com.moo.demogo.mainframe.webview.WebViewActivity
+import com.moo.demogo.utils.encryp.AESUtils
+import com.moo.demogo.utils.encryp.EncrypUtils
+import com.moo.demogo.utils.encryp.RsaEncryptUtils_
 import com.moo.demogo.utils.loge
 import com.moo.demogo.utils.runtimepermission.Permission
 import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
-import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
@@ -38,13 +46,16 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("HeaderFooterActivity", "RecyclerView添加多头和尾，使用装饰者模式，将正常Adapter包装，使其可以addHeaderView和addFooterView", HeaderFooterActivity::class.java),
             ActivityNameBean("CoroutinesActivity", "kotlin重点---协程\n线程间调度，是异步任务能线性调用。", CoroutinesActivity::class.java),
             ActivityNameBean("ServiceActivity", "ServiceActivity\nstart bind Service生命周期", ServiceActivity::class.java),
+            ActivityNameBean("LeakCanaryActivity", "LeakCanaryActivity\n内存泄露分析工具LeakCanary", LeakCanaryActivity::class.java),
             ActivityNameBean("VideoActivity", "VideoActivity\n选择拍摄视频", VideoActivity::class.java),
             ActivityNameBean("DiffUtilActivity", "DiffUtilActivity\nDiffUtil封装通用adapter", DiffUtilActivity::class.java),
             ActivityNameBean("ShareActivity", "ShareActivity\n调用系统分享", ShareActivity::class.java),
             ActivityNameBean("IocActivity", "IocActivity\n自定义ioc框架实现点击事件，网络判断，禁止重复点击", IocActivity::class.java),
             ActivityNameBean("CameraActivity", "CameraActivity\n自定义相机", CameraActivity::class.java),
             ActivityNameBean("DirActivity", "DirActivity\nandroid文件目录获取", DirActivity::class.java),
-            ActivityNameBean("ProxyActivity", "ProxyActivity\njava动态代理", ProxyActivity::class.java)
+            ActivityNameBean("SocketActivity", "SocketActivity\nsocket聊天客户端", SocketActivity::class.java),
+            ActivityNameBean("ProxyActivity", "ProxyActivity\njava动态代理", ProxyActivity::class.java),
+            ActivityNameBean("EncrypActivity", "EncrypActivity\nandroid 加密", EncrypActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
@@ -134,6 +145,15 @@ class MainActivity : BaseActivity() {
 //            }.join()
 //            throw RuntimeException("test crash")
 //        }
+
+        val decodeString = EncrypUtils.decodeRSA("h35XnGCgifJtl+XTwl1jSZMBtzAm35Dknsg0zmhfvqRnxcDa6GQj0HNm3LK/QOco1Ed7FWtWt6yK6B9JaTnHYRoMJoorO39YBwD3vYs5k/sjzx1J/qJIxVhzClZMMdS/60/Rhg0evlQIKqPzT5gEKxMPmLVNtOi+5rjH1DRzKyw=")
+        loge(message = "decodeString = $decodeString")
+
+        val decodeString2 = AESUtils.decode("05a526126eb32e1480e75ca029a0aebc", "mvh5WxwwN2DGg7ognEx/Txwr71DEsM60xPzNV87iKu8=")
+        loge(message = "decodeString2 = $decodeString2")
+
+//        AesEncryptUtils.test()
+        RsaEncryptUtils_.test()
     }
 
     override fun initView() {

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -35,6 +35,7 @@
         </activity>
         <activity
             android:name=".mainframe.webview.WebViewActivity"
+            android:process=":web"
             android:screenOrientation="portrait" />
         <activity
             android:name=".mainframe.sidesliplistview.SideSlipActivity"
@@ -70,9 +71,22 @@
         <activity android:name=".mainframe.share.ShareActivity" />
         <activity android:name=".mainframe.ioc.IocActivity" />
         <activity android:name=".mainframe.camera.CameraActivity" />
-        <activity android:name=".mainframe.dir.DirActivity"
-            android:screenOrientation="landscape"/>
+        <activity android:name=".mainframe.leakcanary.LeakCanaryActivity" />
+        <activity android:name=".mainframe.socket.SocketActivity" />
+        <activity
+            android:name=".mainframe.dir.DirActivity"
+            android:screenOrientation="landscape" />
         <activity android:name=".mainframe.proxy.ProxyActivity" />
+        <activity android:name=".mainframe.encryp.EncrypActivity" />
+
+        <service
+            android:name=".mainframe.service.MyAidlService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.moo.demogo.MyAidlService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

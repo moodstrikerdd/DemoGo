@@ -18,6 +18,8 @@
         <com.moo.demogo.mainframe.sidesliplistview.view.SideSlipListView
             android:id="@+id/lvContent"
             android:layout_width="match_parent"
+            android:dividerHeight="1dp"
+            android:divider="@color/dividerColor"
             android:layout_height="match_parent" />
     </com.moo.demogo.mainframe.sidesliplistview.view.RelativeSwipeRefreshLayout>
 </LinearLayout>

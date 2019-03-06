@@ -25,7 +25,7 @@ fun toast(message: String?) {
     Toast.makeText(BaseApp.instance, message ?: "", Toast.LENGTH_LONG).show()
 }
 
-fun tryCatch(catchBlock: (Throwable) -> Unit = {}, tryBlock: () -> Unit) {
+fun tryCatch(catchBlock: (Throwable) -> Unit = { it.printStackTrace() }, tryBlock: () -> Unit) {
     try {
         tryBlock()
     } catch (_: JobCancellationException) {
