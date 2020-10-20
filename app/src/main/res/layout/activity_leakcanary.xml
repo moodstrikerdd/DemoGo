@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.moo.demogo.commonView.CommTopBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tvTitleText="图表" />
 
-</android.support.constraint.ConstraintLayout>
+    <com.moo.demogo.commonView.DoubleBarGraphView
+        android:id="@+id/dv1"
+        android:layout_width="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_height="wrap_content"/>
+
+    <com.moo.demogo.commonView.SingleBarGraphView
+        android:id="@+id/sv1"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <com.moo.demogo.commonView.SingleBarGraphView
+        android:id="@+id/sv2"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
+
+</ScrollView>

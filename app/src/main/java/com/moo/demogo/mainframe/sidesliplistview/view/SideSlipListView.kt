@@ -122,7 +122,7 @@ class SideSlipListView @JvmOverloads constructor(context: Context, attrs: Attrib
             return
         }
         // 获取当前点的item
-        mPointChild = getChildAt(pointToPosition(mDownX, mDownY) - firstVisiblePosition) as ViewGroup
+        mPointChild = getChildAt(pointToPosition(mDownX, mDownY) - firstVisiblePosition) as ViewGroup?
 
         if (mPointChild == null) {
             return

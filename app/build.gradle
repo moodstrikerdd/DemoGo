@@ -22,7 +22,7 @@ android {
         }
         sourceSets.main { jni.srcDirs = [] }
     }
-    lintOptions {
+   lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }

@@ -21,12 +21,20 @@ class ProxyActivity : BaseActivity() {
             _, p1, p ->
             if (p1.declaringClass == Any::class.java) {
                 //Object的方法一般不处理
-                p1.invoke(this, *p)
+                if(p == null){
+                    p1.invoke(this)
+                }else{
+                    p1.invoke(this, *p)
+                }
             } else {
                 //接口中需要被代理的方法
                 loge(message = "${p1.name} start:${System.currentTimeMillis()}")
                 //使用反射调用实现类的具体实现方法
-                val invoke = p1.invoke(netRequestProxy, *p)
+                val invoke =  if(p == null){
+                    p1.invoke(netRequestProxy)
+                }else{
+                    p1.invoke(netRequestProxy, *p)
+                }
                 loge(message = "${p1.name} end:${System.currentTimeMillis()}")
                 //返回对应代理方法的返回值
                 invoke

@@ -57,7 +57,7 @@ class WebViewActivity : BaseActivity() {
 
             intent.getStringExtra(DefineKey.URL)
         } else {
-            "http://www.moodstrikerdd.com"
+            "https://h5.niuguwang.com/2019y/course/article-detail/index.html?bbsid=15332272&showpreview=0"
         }
         title = if (intent.hasExtra(DefineKey.TITLE)) {
             intent.getStringExtra(DefineKey.TITLE)
