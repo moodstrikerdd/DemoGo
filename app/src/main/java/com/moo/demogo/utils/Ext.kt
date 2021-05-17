@@ -21,6 +21,10 @@ fun loge(tag: String = "DemoGo", message: String?) {
     Log.e(tag, message ?: tag)
 }
 
+fun loge(message: String?) {
+    Log.e("DemoGo", message ?: "DemoGo")
+}
+
 fun toast(message: String?) {
     Toast.makeText(BaseApp.instance, message ?: "", Toast.LENGTH_LONG).show()
 }
