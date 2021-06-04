@@ -2,12 +2,18 @@ package com.moo.demogo
 
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
+import android.os.Handler
+import android.os.Message
+import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
+import android.util.DisplayMetrics
+import android.util.Log
 import android.util.TypedValue
 import android.widget.TextView
 import com.moo.adapter.ViewHolder
@@ -15,7 +21,6 @@ import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.RecycleViewDivider
 import com.moo.demogo.base.BaseActivity
 import com.moo.demogo.bean.ActivityNameBean
-import com.moo.demogo.commonView.CenterImageSpan
 import com.moo.demogo.mainframe.camera.CameraActivity
 import com.moo.demogo.mainframe.coordinate.CoordinatorLayoutDemoActivity
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
@@ -26,6 +31,7 @@ import com.moo.demogo.mainframe.headerandfooter.HeaderFooterActivity
 import com.moo.demogo.mainframe.imagescale.ImageScaleActivity
 import com.moo.demogo.mainframe.ioc.IocActivity
 import com.moo.demogo.mainframe.leakcanary.LeakCanaryActivity
+import com.moo.demogo.mainframe.ndk.NdkTest2
 import com.moo.demogo.mainframe.proxy.ProxyActivity
 import com.moo.demogo.mainframe.recycler.RecyclerViewActivity
 import com.moo.demogo.mainframe.service.ServiceActivity
@@ -44,6 +50,22 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity() {
+
+    private val handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            when (msg.what) {
+                0 -> {
+                    Log.e("handler", "000000000000")
+                    sendEmptyMessageDelayed(0, 1000)
+                }
+                else -> {
+                    Log.e("handler", "111111111111")
+                    Thread.sleep(11000)
+                }
+            }
+        }
+    }
 
     private val list = arrayListOf(
             ActivityNameBean("WebViewActivity", "WebView相关设置，入宽高自适应，shouldOverrideUrlLoa。", WebViewActivity::class.java),
@@ -69,90 +91,7 @@ class MainActivity : BaseActivity() {
     override fun getLayoutId(): Int = R.layout.activity_main
 
     override fun initData() {
-//        loge(message = NdkTest.get())
-//        loge(message = NdkTest2.get())
-
-//        Flowable.create(FlowableOnSubscribe<Any> {
-//            Thread.sleep(2000)
-//            it.onNext("crash")
-//        }, BackpressureStrategy.BUFFER)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Subscriber<Any> {
-//                    override fun onComplete() {
-//                    }
 //
-//                    override fun onSubscribe(s: Subscription?) {
-//                    }
-//
-//                    override fun onNext(t: Any?) {
-//                        if (t == "crash") {
-//                            throw RuntimeException("test crash")
-//                        }
-//                    }
-//
-//                    override fun onError(t: Throwable?) {
-//                    }
-//
-//                })
-//        Flowable.interval(1, TimeUnit.SECONDS, Schedulers.io())
-//                .flatMap {
-//                    loge(message = "flatMap$it")
-//                    Flowable.create(FlowableOnSubscribe<Any> { inner ->
-//                        val sleep = Random().nextInt(3)
-//                        loge(message = "Flowable sleep $sleep s")
-//                        Thread.sleep(sleep * 1000L)
-//                        loge(message = "inner start")
-//                        inner.onNext("$it")
-//                    }, BackpressureStrategy.BUFFER)
-//                }
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Subscriber<Any> {
-//                    override fun onComplete() {
-//                    }
-//
-//                    override fun onSubscribe(s: Subscription?) {
-//                        s?.request(Long.MAX_VALUE)
-//                    }
-//
-//                    override fun onNext(t: Any?) {
-//                        val sleep = Random().nextInt(3)
-//                        loge(message = "onNext sleep $sleep s")
-//                        Thread.sleep(sleep * 1000L)
-//                        loge(message = "onNext $t")
-//                    }
-//
-//                    override fun onError(t: Throwable?) {
-//                    }
-//                })
-//        Observable.create<String> {
-//            Thread.sleep(2000)
-//            it.onNext("crash")
-//        }.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(object : Observer<String> {
-//                    override fun onComplete() {
-//                    }
-//
-//                    override fun onSubscribe(d: Disposable) {
-//                    }
-//
-//                    override fun onNext(t: String) {
-//                        if (t == "crash") {
-//                            throw RuntimeException("test crash")
-//                        }
-//                    }
-//
-//                    override fun onError(e: Throwable) {
-//                    }
-//                })
-
-//        launch(UI) {
-//            launch(CommonPool) {
-//                Thread.sleep(2000)
-//            }.join()
-//            throw RuntimeException("test crash")
-//        }
 
         val decodeString = EncrypUtils.decodeRSA("h35XnGCgifJtl+XTwl1jSZMBtzAm35Dknsg0zmhfvqRnxcDa6GQj0HNm3LK/QOco1Ed7FWtWt6yK6B9JaTnHYRoMJoorO39YBwD3vYs5k/sjzx1J/qJIxVhzClZMMdS/60/Rhg0evlQIKqPzT5gEKxMPmLVNtOi+5rjH1DRzKyw=")
         loge(message = "decodeString = $decodeString")
@@ -162,6 +101,10 @@ class MainActivity : BaseActivity() {
 
 //        AesEncryptUtils.test()
         RsaEncryptUtils_.test()
+        loge(NdkTest2.get())
+
+        handler.sendEmptyMessageDelayed(0, 1000)
+        handler.sendEmptyMessageDelayed(1, 2500)
     }
 
     override fun initView() {
@@ -183,7 +126,7 @@ class MainActivity : BaseActivity() {
                 val titleBuilder = StringBuilder(t.describe)
                 titleBuilder.append("aaaa")
                 val spannableString = SpannableStringBuilder(titleBuilder)
-                spannableString.setSpan(ForegroundColorSpan(Color.WHITE),t.describe!!.length,t.describe!!.length+4,Spanned.SPAN_INCLUSIVE_INCLUSIVE)
+                spannableString.setSpan(ForegroundColorSpan(Color.WHITE), t.describe!!.length, t.describe!!.length + 4, Spanned.SPAN_INCLUSIVE_INCLUSIVE)
 
                 spannableString.setSpan(ImageSpan(drawable1, 0),
                         t.describe!!.length,
@@ -195,7 +138,7 @@ class MainActivity : BaseActivity() {
                         t.describe!!.length + 3,
                         Spanned.SPAN_INCLUSIVE_INCLUSIVE)
 
-                holder.getView<TextView>(R.id.message).setText(spannableString,TextView.BufferType.SPANNABLE)
+                holder.getView<TextView>(R.id.message).setText(spannableString, TextView.BufferType.SPANNABLE)
 
                 holder.convertView.setOnClickListener {
                     try {
@@ -220,5 +163,14 @@ class MainActivity : BaseActivity() {
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         RuntimePermissionHelper.onRequestPermissionsResult2(this, requestCode, permissions, grantResults, null)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    override fun onResume() {
+        super.onResume()
+        val displayMetrics = resources.displayMetrics
+        val dm = DisplayMetrics()
+        windowManager.defaultDisplay.getRealMetrics(dm)
+        loge("displayMetrics：${displayMetrics.heightPixels} dm：${dm.heightPixels}")
     }
 }

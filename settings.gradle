@@ -1,1 +1,1 @@
-include ':app', ':adapter', ':app2'
+include ':app', ':adapter', ':app2', ':plugin-jiagu'

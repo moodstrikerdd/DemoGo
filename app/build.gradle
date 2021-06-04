@@ -1,8 +1,15 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'com.rflash.jiagu'
+}
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
+jiagu {
+    userName "18813962047"
+    password "489597yang"
+    jiaguTools "D:/jiagu/jiagu/jiagu.jar"
+}
 
 android {
     compileSdkVersion 26
@@ -15,14 +22,25 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
+    signingConfigs {
+        release {
+            keyAlias "demoGo"
+            keyPassword "123456"
+            storePassword "123456"
+            storeFile file("../demoGo.jks")
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         sourceSets.main { jni.srcDirs = [] }
     }
-   lintOptions {
+    lintOptions {
         checkReleaseBuilds false
         abortOnError false
     }
@@ -31,6 +49,21 @@ android {
         targetCompatibility = '1.8'
     }
 
+
+    flavorDimensions 'normal'
+    productFlavors {
+        qq {
+            dimension 'normal'
+        }
+        baidu {
+            dimension 'normal'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['src/main/jinLibs', 'libs']
+        }
+    }
 }
 
 dependencies {
@@ -64,3 +97,4 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
 }
+

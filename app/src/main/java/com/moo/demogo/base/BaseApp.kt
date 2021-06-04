@@ -7,10 +7,8 @@ import android.text.TextUtils
 import com.moo.demogo.mainframe.exception.ExceptionCatcher
 import com.moo.demogo.utils.SPUtils
 import com.squareup.leakcanary.LeakCanary
-import kotlin.properties.Delegates
-import com.squareup.leakcanary.LeakCanary.refWatcher
 import com.squareup.leakcanary.RefWatcher
-
+import kotlin.properties.Delegates
 
 
 /**
@@ -21,6 +19,7 @@ import com.squareup.leakcanary.RefWatcher
 
 class BaseApp : Application() {
     private lateinit var refWatcher: RefWatcher
+
     companion object {
         var instance: BaseApp by Delegates.notNull()
 
@@ -34,10 +33,10 @@ class BaseApp : Application() {
         super.onCreate()
         val pid = android.os.Process.myPid()
         val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
-        for (process in activityManager.runningAppProcesses){
-            if(process.pid == pid){
+        for (process in activityManager.runningAppProcesses) {
+            if (process.pid == pid) {
                 val currentProcessName = process.processName
-                if(!TextUtils.isEmpty(currentProcessName) && !currentProcessName.contains(":")){
+                if (!TextUtils.isEmpty(currentProcessName) && !currentProcessName.contains(":")) {
                     //避免多次初始化APP
                     instance = this
                     SPUtils.init(this)
