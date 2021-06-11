@@ -1,4 +1,4 @@
-package com.moo.demogo.bean;
+package com.moo.moouidservice.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

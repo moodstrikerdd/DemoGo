@@ -24,6 +24,7 @@ import com.moo.demogo.bean.ActivityNameBean
 import com.moo.demogo.mainframe.camera.CameraActivity
 import com.moo.demogo.mainframe.coordinate.CoordinatorLayoutDemoActivity
 import com.moo.demogo.mainframe.coroutines.CoroutinesActivity
+import com.moo.demogo.mainframe.customerview.CustomerViewActivity
 import com.moo.demogo.mainframe.diffutil.DiffUtilActivity
 import com.moo.demogo.mainframe.dir.DirActivity
 import com.moo.demogo.mainframe.encryp.EncrypActivity
@@ -50,23 +51,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.toast
 
 class MainActivity : BaseActivity() {
-
-    private val handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-            when (msg.what) {
-                0 -> {
-                    Log.e("handler", "000000000000")
-                    sendEmptyMessageDelayed(0, 1000)
-                }
-                else -> {
-                    Log.e("handler", "111111111111")
-                    Thread.sleep(11000)
-                }
-            }
-        }
-    }
-
     private val list = arrayListOf(
             ActivityNameBean("WebViewActivity", "WebView相关设置，入宽高自适应，shouldOverrideUrlLoa。", WebViewActivity::class.java),
             ActivityNameBean("SideSlipActivity", "侧滑ListView\nSwipeRefreshLayout冲突，NestedScrolling实现。", SideSlipActivity::class.java),
@@ -85,7 +69,8 @@ class MainActivity : BaseActivity() {
             ActivityNameBean("EncrypActivity", "EncrypActivity\nandroid 加密。", EncrypActivity::class.java),
             ActivityNameBean("RecyclerViewActivity", "RecyclerViewActivity\nRecyclerView联动。", RecyclerViewActivity::class.java),
             ActivityNameBean("CoordinatorLayoutDemoActivity", "CoordinatorLayoutDemoActivity\nCoordinatorLayout自定义behavior。", CoordinatorLayoutDemoActivity::class.java),
-            ActivityNameBean("ImageScaleActivity", "ImageScaleActivity\nImageView scaleType 区别。", ImageScaleActivity::class.java)
+            ActivityNameBean("ImageScaleActivity", "ImageScaleActivity\nImageView scaleType 区别。", ImageScaleActivity::class.java),
+            ActivityNameBean("CustomerViewActivity", "CustomerViewActivity\n自定义view调试页面", CustomerViewActivity::class.java)
     )
 
     override fun getLayoutId(): Int = R.layout.activity_main
@@ -98,13 +83,9 @@ class MainActivity : BaseActivity() {
 
         val decodeString2 = AESUtils.decode("05a526126eb32e1480e75ca029a0aebc", "mvh5WxwwN2DGg7ognEx/Txwr71DEsM60xPzNV87iKu8=")
         loge(message = "decodeString2 = $decodeString2")
-
 //        AesEncryptUtils.test()
         RsaEncryptUtils_.test()
         loge(NdkTest2.get())
-
-        handler.sendEmptyMessageDelayed(0, 1000)
-        handler.sendEmptyMessageDelayed(1, 2500)
     }
 
     override fun initView() {

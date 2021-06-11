@@ -1,6 +1,8 @@
 package com.moo.demogo.utils
 
+import android.content.res.Resources
 import android.util.Log
+import android.util.TypedValue
 import android.widget.Toast
 import com.moo.demogo.base.BaseApp
 import com.moo.demogo.bean.BaseBean
@@ -50,3 +52,4 @@ fun <T> doHttp(createApi: () -> Deferred<BaseBean<T>>, callBack: CallBack<T>) {
         }
     }
 }
+

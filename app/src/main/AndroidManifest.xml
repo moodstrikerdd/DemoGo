@@ -81,13 +81,14 @@
         <activity android:name=".mainframe.recycler.RecyclerViewActivity" />
         <activity android:name=".mainframe.imagescale.ImageScaleActivity" />
         <activity android:name=".mainframe.coordinate.CoordinatorLayoutDemoActivity" />
+        <activity android:name=".mainframe.customerview.CustomerViewActivity" />
 
         <service
             android:name=".mainframe.service.MyAidlService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.moo.demogo.MyAidlService" />
+                <action android:name="com.moo.moouidservice.MyAidlService" />
             </intent-filter>
         </service>
     </application>
