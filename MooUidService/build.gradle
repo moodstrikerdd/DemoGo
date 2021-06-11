@@ -6,29 +6,25 @@ dependencies {
 }
 
 
-task("copyJar"){
-    doLast {
-        if (rootProject.file('app/libs/MooUidService.jar').exists()) {
-            println('我先删除了app旧的broker_53.aar')
-            rootProject.file('app/libs/broker_53.aar').delete()
-        }
-        if (rootProject.file('app2/libs/MooUidService.jar').exists()) {
-            println('我先删除了app2旧的broker_53.aar')
-            rootProject.file('app2/libs/MooUidService.jar').delete()
-        }
-        copy {
-            from "${buildDir}/libs/MooUidService.jar"
-            into rootProject.file('app/libs/')
-            println('新的MooUidService.jar已经复制到app/libs/')
-        }
-        copy {
-            from "${buildDir}/libs/MooUidService.jar"
-            into rootProject.file('app2/libs/')
-            println('新的MooUidService.jar已经复制到app2/libs/')
-        }
+jar.doLast {
+    if (rootProject.file('app/libs/MooUidService.jar').exists()) {
+        println('我先删除了app旧的MooUidService.jar')
+        rootProject.file('app/libs/MooUidService.jar').delete()
+    }
+    if (rootProject.file('app2/libs/MooUidService.jar').exists()) {
+        println('我先删除了app2旧的MooUidService.jar')
+        rootProject.file('app2/libs/MooUidService.jar').delete()
+    }
+    copy {
+        from "${buildDir}/libs/MooUidService.jar"
+        into rootProject.file('app/libs/')
+        println('新的MooUidService.jar已经复制到app/libs/')
+    }
+    copy {
+        from "${buildDir}/libs/MooUidService.jar"
+        into rootProject.file('app2/libs/')
+        println('新的MooUidService.jar已经复制到app2/libs/')
     }
 }
-
-copyJar.dependsOn getTasksByName("jar",false)
 sourceCompatibility = "7"
 targetCompatibility = "7"
