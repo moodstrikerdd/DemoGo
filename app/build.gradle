@@ -5,10 +5,16 @@ plugins {
     id 'com.rflash.jiagu'
 }
 
+println(rootProject.rootDir.absolutePath)
+println(rootDir.absolutePath)
+println(buildDir.absolutePath)
+
 jiagu {
     userName "18813962047"
     password "489597yang"
-    jiaguTools "D:/jiagu/jiagu/jiagu.jar"
+    jiaguTools rootDir.absolutePath + File.separator + "app" + File.separator + "walle" + File.separator + "jiagu" + File.separator + "jiagu.jar"
+    wallePath rootDir.absolutePath + File.separator + "app" + File.separator + "walle" + File.separator + "walle-cli-all.jar"
+    channlConfigPath rootDir.absolutePath + File.separator + "app" + File.separator + "walle" + File.separator + "config.json"
 }
 
 android {

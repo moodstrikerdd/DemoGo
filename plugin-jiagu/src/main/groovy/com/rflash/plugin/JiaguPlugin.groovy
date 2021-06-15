@@ -15,9 +15,13 @@ class JiaguPlugin implements Plugin<Project> {
         JiaGuConfig jiaGu = project.extensions.create("jiagu", JiaGuConfig.class)
         //在gradle配置完成之后回调，解析完build.gradle之后
         project.afterEvaluate {
-            def appExtension = project.extensions.getByType(AppExtension)
+            println("jiaGuConfig------->" + jiaGu.jiaguTools)
+            println("jiaGuConfig------->" + jiaGu.wallePath)
+            println("jiaGuConfig------->" + jiaGu.channlConfigPath)
+            def appExtension = project.extensions.getByType(AppExtension.class)
             appExtension.applicationVariants.all { variant ->
                 ReadOnlySigningConfig signingConfig = variant.signingConfig
+                println("signingConfig------->" + signingConfig.storeFile.absolutePath)
                 ((ApplicationVariant) variant).outputs.all { output ->
                     //apk 文件
                     File apk = output.outputFile
@@ -36,6 +40,12 @@ class JiaguPlugin implements Plugin<Project> {
                         println("jiagu :" + "variant.assemble--" + variant.assemble)
                         task.dependsOn variant.assemble
                     }
+
+                    ChannelTask channelTask = project.tasks.create("channel-jiagu${variant.baseName.capitalize()}", ChannelTask)
+                    channelTask.apk = apk
+                    channelTask.jiaguConfig = jiaGu
+                    channelTask.dependsOn(task)
+
                 }
             }
 

@@ -6,4 +6,6 @@ class JiaGuConfig{
     String password
     String jiaguTools
 
+    String wallePath
+    String channlConfigPath
 }

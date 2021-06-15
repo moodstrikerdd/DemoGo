@@ -1,0 +1,20 @@
+{
+  "defaultExtraInfo": {
+    "umengAppKey": "5316f57756240bccac0def1b"
+  },
+  "defaultExtraInfoStrategy": "always",
+  "channelInfoList": [
+    {"channel": "baidu"},
+    {"channel": "QQ"},
+    {"channel": "meizu"},
+    {"channel": "lenovo"},
+    {"channel": "sogou"},
+    {"channel": "360"},
+    {"channel": "niuguwang"},
+    {"channel": "xiaomi", "extraInfo": {"channelId" : "2"}} ,
+    {"channel": "huawei", "extraInfo": {"channelId" : "3"}},
+    {"channel": "samsung"},
+    {"channel": "vivo"},
+    {"channel": "uc", "extraInfo": {"umengAppKey": "5472ff0dfd98c5d880000b3e"}}
+  ]
+}
