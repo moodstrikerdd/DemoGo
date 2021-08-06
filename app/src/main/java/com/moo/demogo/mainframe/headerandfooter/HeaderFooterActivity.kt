@@ -47,7 +47,7 @@ class HeaderFooterActivity : BaseActivity() {
         adapter.addFooterView(R.layout.layout_header_footer)
         adapter.addFooterView(R.layout.layout_header_footer)
 
-        rvContent.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        rvContent.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
         rvContent.adapter = adapter
     }
 

@@ -3,8 +3,6 @@ package com.moo.demogo
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.os.Handler
-import android.os.Message
 import android.support.annotation.RequiresApi
 import android.support.v4.app.ActivityCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -13,9 +11,10 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.moo.adapter.ViewHolder
 import com.moo.adapter.recyclerview.CommonAdapter
 import com.moo.adapter.recyclerview.RecycleViewDivider
@@ -48,7 +47,9 @@ import com.moo.demogo.utils.loge
 import com.moo.demogo.utils.runtimepermission.Permission
 import com.moo.demogo.utils.runtimepermission.RuntimePermissionHelper
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_snap.*
 import org.jetbrains.anko.toast
+import java.lang.reflect.Proxy
 
 class MainActivity : BaseActivity() {
     private val list = arrayListOf(
@@ -139,6 +140,13 @@ class MainActivity : BaseActivity() {
         RuntimePermissionHelper.permissions.addAll(Permission.MICROPHONE)
         RuntimePermissionHelper.permissions.add(Permission.PHONE[0])
         RuntimePermissionHelper.requestPermissions2(this)
+
+        Glide.with(this).load("").into(ivContent)
+
+        Proxy.newProxyInstance(classLoader, arrayOf(View.OnClickListener::class.java)){proxy, method, args ->
+
+
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

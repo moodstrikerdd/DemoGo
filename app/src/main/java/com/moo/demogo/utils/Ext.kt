@@ -1,6 +1,7 @@
 package com.moo.demogo.utils
 
 import android.content.res.Resources
+import android.provider.Contacts
 import android.util.Log
 import android.util.TypedValue
 import android.widget.Toast
@@ -9,10 +10,8 @@ import com.moo.demogo.bean.BaseBean
 import com.moo.demogo.http.CallBack
 import com.moo.demogo.http.ExceptionHandle
 import com.moo.demogo.http.RetrofitHelper
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.JobCancellationException
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.*
+import java.lang.Exception
 
 /**
  * @author moodstrikerdd
@@ -34,7 +33,7 @@ fun toast(message: String?) {
 fun tryCatch(catchBlock: (Throwable) -> Unit = { it.printStackTrace() }, tryBlock: () -> Unit) {
     try {
         tryBlock()
-    } catch (_: JobCancellationException) {
+    } catch (_: Exception) {
 
     } catch (t: Throwable) {
         catchBlock(t)
@@ -42,7 +41,7 @@ fun tryCatch(catchBlock: (Throwable) -> Unit = { it.printStackTrace() }, tryBloc
 }
 
 fun <T> doHttp(createApi: () -> Deferred<BaseBean<T>>, callBack: CallBack<T>) {
-    launch(UI) {
+    GlobalScope.launch(Dispatchers.Main) {
         try {
             val deferred = createApi()
             val await = deferred.await()

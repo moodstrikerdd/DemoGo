@@ -3,6 +3,7 @@ package com.moo.demogo.base
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
+import android.support.multidex.MultiDex
 import android.text.TextUtils
 import com.moo.demogo.mainframe.exception.ExceptionCatcher
 import com.moo.demogo.utils.SPUtils
@@ -45,6 +46,11 @@ class BaseApp : Application() {
             }
         }
         refWatcher = setupLeakCanary()
+    }
+
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        MultiDex.install(base)
     }
 
     private fun setupLeakCanary(): RefWatcher {
